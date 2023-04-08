@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Exceptions;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Exceptions;
 
 internal class UnsuccessfulNotionRequest : Exception
 {
-    public UnsuccessfulNotionRequest(string? message) : base(message)
-    { }
+	public UnsuccessfulNotionRequest(string? message) : base(message)
+	{ }
 }

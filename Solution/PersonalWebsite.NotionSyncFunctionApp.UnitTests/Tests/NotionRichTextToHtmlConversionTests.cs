@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.HTML;
-using PersonalWebsite.ContentSyncFunction.Notion.Conversion;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 [TestFixture]
 internal class NotionRichTextToHtmlConversionTests
@@ -52,7 +52,7 @@ internal class NotionRichTextToHtmlConversionTests
 			Href = inlineTextSemantic == InlineTextSemantic.Link ? href : null
 		};
 	}
-	
+
 	protected NotionRichText CreateNotionRichTextWithMultipleAnnotations(string plainText, IEnumerable<InlineTextSemantic> inlineTextSemantics, string href = PrimaryTestHref)
 	{
 		return new NotionRichText
@@ -72,20 +72,20 @@ internal class NotionRichTextToHtmlConversionTests
 			switch (textSemantic)
 			{
 				case InlineTextSemantic.Bold:
-					notionTextAnnotation.Bold = true;
-					break;
+				notionTextAnnotation.Bold = true;
+				break;
 				case InlineTextSemantic.Italic:
-					notionTextAnnotation.Italic = true;
-					break;
+				notionTextAnnotation.Italic = true;
+				break;
 				case InlineTextSemantic.Strikethrough:
-					notionTextAnnotation.Strikethrough = true;
-					break;
+				notionTextAnnotation.Strikethrough = true;
+				break;
 				case InlineTextSemantic.Underline:
-					notionTextAnnotation.Underline = true;
-					break;
+				notionTextAnnotation.Underline = true;
+				break;
 				case InlineTextSemantic.Code:
-					notionTextAnnotation.Code = true;
-					break;
+				notionTextAnnotation.Code = true;
+				break;
 			}
 		}
 
@@ -95,7 +95,7 @@ internal class NotionRichTextToHtmlConversionTests
 	protected static void AssertElementHasCorrectTypeAndChildCount(HtmlElement actualHtmlElement,
 		InlineTextSemantic expectedTextSemantic,
 		string expectedHref = PrimaryTestHref,
-		int childCount =1)
+		int childCount = 1)
 	{
 		AssertHtmlElementIsCorrectType(actualHtmlElement, expectedTextSemantic, expectedHref);
 

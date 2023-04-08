@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Properties.PageProperty;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Properties.Types;
 
 internal class NotionCreatedTimePropertyType : NotionPagePropertyType
 {

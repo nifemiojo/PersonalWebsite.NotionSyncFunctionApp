@@ -6,11 +6,13 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PersonalWebsite.ContentSyncFunction.Notion;
+using PersonalWebsite.NotionSyncFunctionApp;
+using PersonalWebsite.NotionSyncFunctionApp.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
 
-[assembly: FunctionsStartup(typeof(PersonalWebsite.ContentSyncFunction.Startup))]
+[assembly: FunctionsStartup(typeof(Startup))]
 
-namespace PersonalWebsite.ContentSyncFunction;
+namespace PersonalWebsite.NotionSyncFunctionApp;
 
 public class Startup : FunctionsStartup
 {

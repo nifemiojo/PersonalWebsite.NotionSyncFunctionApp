@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.HTML;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
-using static System.Net.Mime.MediaTypeNames;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
 namespace PersonalWebsite.ContentSync.Tests.Tests;
 

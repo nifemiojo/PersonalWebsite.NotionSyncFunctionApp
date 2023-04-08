@@ -1,7 +1,7 @@
-﻿using PersonalWebsite.ContentSyncFunction.Notion.Models.Objects;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 using System.Text.Json.Serialization;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Block;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Block;
 
 internal class NotionBlock
 {

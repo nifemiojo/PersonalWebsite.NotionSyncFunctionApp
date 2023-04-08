@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using PersonalWebsite.ContentSyncFunction.Common;
 
-namespace PersonalWebsite.ContentSyncFunction.HTML;
+namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
 public abstract class HtmlElement
 {
@@ -47,12 +45,12 @@ public abstract class HtmlElement
 
 		if (this is HtmlHyperlink linkElement)
 		{
-			return linkElement.Href == ((HtmlHyperlink)htmlElement).Href;
+			return linkElement.Href == ((HtmlHyperlink) htmlElement).Href;
 		}
 
 		return true;
 	}
-	
+
 	public bool IsEquivalentTo(Type type)
 	{
 		return GetType() == type;
@@ -69,7 +67,7 @@ public abstract class HtmlElement
 
 		return descendantElements;
 	}
-	
+
 	public List<HtmlElement> GetNewestDescendantElementsInclusive()
 	{
 		var mostRecentDescendantElements = new List<HtmlElement>();

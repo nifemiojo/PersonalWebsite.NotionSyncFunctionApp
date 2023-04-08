@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.HTML;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Conversion;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
 public class NotionRichTextToHtmlConversion
 {
@@ -73,7 +73,7 @@ public class NotionRichTextToHtmlConversion
 					var allMatching = true;
 					for (int i = 0; i < Math.Min(candidateElementsOrdered.Count, currentParentNewestDescendantHierarchy.Count); i++)
 					{
-						
+
 						if (!candidateElementsOrdered[i].IsEquivalentTo(currentParentNewestDescendantHierarchy[i]))
 						{
 							currentParentNewestDescendantHierarchy[i].AddSibling(candidateElementsOrdered[i]);
@@ -91,7 +91,7 @@ public class NotionRichTextToHtmlConversion
 									.Single());
 					}
 				}
-				
+
 				if (!candidateElementsOrdered.First().IsEquivalentTo(currentParentElement))
 					currentParentElement = candidateElementsOrdered.First();
 			}
@@ -105,13 +105,13 @@ public class NotionRichTextToHtmlConversion
 	private static HtmlElement GetLastElementInSourcePresentInTarget(List<HtmlElement> source, List<HtmlElement> target)
 	{
 		return source
-			.Last( x => target.Any(x.IsEquivalentTo));
+			.Last(x => target.Any(x.IsEquivalentTo));
 	}
 
 	private List<HtmlElement> CalculateNewCandidateParentElement(
 		int nextIndex,
 		List<HtmlElement> candidateElements,
-		List<HtmlElement> currentParentNewestDescendantHierarchy, 
+		List<HtmlElement> currentParentNewestDescendantHierarchy,
 		NotionRichText notionRichText)
 	{
 		var newElementsOrdered = DetermineOrderOfCandidateElements(
@@ -167,7 +167,7 @@ public class NotionRichTextToHtmlConversion
 
 	private HtmlElement DetermineCurrentParentElement(HtmlElement currentParentElement, NotionRichText notionRichText)
 	{
-		if (currentParentElement == _rootElement) 
+		if (currentParentElement == _rootElement)
 			return currentParentElement;
 
 		var parentElementSemanticType = InlineTextSemanticMapping.GetSemanticTextType(currentParentElement);
@@ -197,7 +197,7 @@ public class NotionRichTextToHtmlConversion
 	{
 		var currentParentHierarchy = currentParent.GetNewestDescendantElementsInclusive();
 
-		if(currentParentHierarchy.First().IsEquivalentTo(_rootElement))
+		if (currentParentHierarchy.First().IsEquivalentTo(_rootElement))
 			currentParentHierarchy.RemoveAt(0);
 
 		var plainTextElementsRemoved = currentParentHierarchy
@@ -232,41 +232,41 @@ public class NotionRichTextToHtmlConversion
 				switch (InlineTextSemanticMapping.GetSemanticTextType(candidateElements[j]))
 				{
 					case InlineTextSemantic.Bold:
-						if (orderedElements.Count(x => x is HtmlBold) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Bold))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlBold) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Bold))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 					case InlineTextSemantic.Italic:
-						if (orderedElements.Count(x => x is HtmlItalic) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Italic))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlItalic) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Italic))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 					case InlineTextSemantic.Strikethrough:
-						if (orderedElements.Count(x => x is HtmlStrikethrough) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Strikethrough))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlStrikethrough) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Strikethrough))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 					case InlineTextSemantic.Underline:
-						if (orderedElements.Count(x => x is HtmlUnderline) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Underline))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlUnderline) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Underline))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 					case InlineTextSemantic.Code:
-						if (orderedElements.Count(x => x is HtmlCode) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Code))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlCode) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Code))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 					case InlineTextSemantic.Link:
-						if (orderedElements.Count(x => x is HtmlHyperlink) == 0 && !remainingRichTexts[i].TextSemanticsIncludes(InlineTextSemantic.Link, (candidateElements[j] as HtmlHyperlink).Href))
-						{
-							orderedElements.Insert(0, candidateElements[j]);
-						}
-						break;
+					if (orderedElements.Count(x => x is HtmlHyperlink) == 0 && !remainingRichTexts[i].TextSemanticsIncludes(InlineTextSemantic.Link, (candidateElements[j] as HtmlHyperlink).Href))
+					{
+						orderedElements.Insert(0, candidateElements[j]);
+					}
+					break;
 				}
 			}
 		}

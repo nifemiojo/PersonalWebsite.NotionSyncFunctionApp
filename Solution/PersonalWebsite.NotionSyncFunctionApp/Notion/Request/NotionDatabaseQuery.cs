@@ -1,6 +1,6 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Notion.Request;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Request;
 
 internal class NotionDatabaseQuery
 {
-    public NotionFilter Filter { get; set; }
+	public NotionFilter Filter { get; set; }
 }

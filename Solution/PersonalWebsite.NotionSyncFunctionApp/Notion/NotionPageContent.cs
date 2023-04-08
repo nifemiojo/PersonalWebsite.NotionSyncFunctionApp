@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Block;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Block;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 
 internal class NotionPageContent
 {

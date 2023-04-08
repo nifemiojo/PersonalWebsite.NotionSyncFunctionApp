@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
 public class NotionRichText
 {
@@ -69,7 +69,7 @@ public class NotionRichText
 		var linkElement = htmlElements.SingleOrDefault(x => x is HtmlHyperlink);
 		if (linkElement != null)
 		{
-			((HtmlHyperlink)linkElement).Href = Href!;
+			((HtmlHyperlink) linkElement).Href = Href!;
 		}
 
 		return htmlElements;

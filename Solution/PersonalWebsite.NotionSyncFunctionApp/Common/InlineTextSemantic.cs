@@ -1,11 +1,11 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Common;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Common;
 
 public enum InlineTextSemantic
 {
-    Bold,
-    Italic,
-    Strikethrough,
-    Underline,
-    Code,
-    Link
+	Bold,
+	Italic,
+	Strikethrough,
+	Underline,
+	Code,
+	Link
 }

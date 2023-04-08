@@ -1,4 +1,4 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Domain;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 internal class Category
 {

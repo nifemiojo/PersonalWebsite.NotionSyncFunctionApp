@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using PersonalWebsite.ContentSyncFunction.Domain;
-using PersonalWebsite.ContentSyncFunction.Notion.Pages;
+using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Pages;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Mapping;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Mapping;
 
 internal class NotionMapper
 {

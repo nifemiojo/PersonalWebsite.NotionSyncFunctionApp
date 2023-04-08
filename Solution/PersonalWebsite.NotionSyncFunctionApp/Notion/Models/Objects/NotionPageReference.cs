@@ -1,6 +1,6 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
 internal class NotionPageReference
 {
-    public string Id { get; set; }
+	public string Id { get; set; }
 }

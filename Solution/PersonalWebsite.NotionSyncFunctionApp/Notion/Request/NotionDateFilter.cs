@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Request;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Request;
 
 internal class NotionDateFilter
 {
-    [JsonPropertyName("on_or_after")]
-    public string OnOrAfter { get; set; }
+	[JsonPropertyName("on_or_after")]
+	public string OnOrAfter { get; set; }
 }

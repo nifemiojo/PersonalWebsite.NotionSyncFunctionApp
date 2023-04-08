@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Properties.PageProperty;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Properties.Types;
 
 internal class NotionRichTextPropertyType : NotionPagePropertyType
 {

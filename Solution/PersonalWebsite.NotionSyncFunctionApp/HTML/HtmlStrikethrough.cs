@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using PersonalWebsite.ContentSyncFunction.Common;
 
-namespace PersonalWebsite.ContentSyncFunction.HTML;
+namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
 class HtmlStrikethrough : HtmlElement
 {

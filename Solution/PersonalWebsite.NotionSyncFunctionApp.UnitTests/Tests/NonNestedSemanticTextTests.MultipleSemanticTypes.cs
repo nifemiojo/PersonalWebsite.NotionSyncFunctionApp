@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
 namespace PersonalWebsite.ContentSync.Tests.Tests;
 

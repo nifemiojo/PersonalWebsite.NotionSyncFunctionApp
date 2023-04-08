@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using PersonalWebsite.ContentSyncFunction.Common;
-using PersonalWebsite.ContentSyncFunction.HTML;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 namespace PersonalWebsite.ContentSync.Tests.Tests;
 

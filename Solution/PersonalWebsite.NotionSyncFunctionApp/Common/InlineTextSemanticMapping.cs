@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using PersonalWebsite.ContentSyncFunction.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
 
-namespace PersonalWebsite.ContentSyncFunction.Common;
+namespace PersonalWebsite.NotionSyncFunctionApp.Common;
 
 public class InlineTextSemanticMapping
 {
@@ -19,7 +19,7 @@ public class InlineTextSemanticMapping
 			_ => throw new ArgumentOutOfRangeException(nameof(inlineTextSemantic), inlineTextSemantic, null)
 		};
 	}
-	
+
 	public static HtmlElement GetEquivalentHtmlElement(InlineTextSemantic inlineTextSemantic)
 	{
 		return inlineTextSemantic switch
@@ -33,7 +33,7 @@ public class InlineTextSemanticMapping
 			_ => throw new ArgumentOutOfRangeException(nameof(inlineTextSemantic), inlineTextSemantic, null)
 		};
 	}
-	
+
 	public static InlineTextSemantic GetSemanticTextType(HtmlElement htmlElement)
 	{
 		return htmlElement switch

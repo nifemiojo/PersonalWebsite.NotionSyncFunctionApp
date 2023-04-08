@@ -1,4 +1,4 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Block;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Block;
 
 class NotionChildPage
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PersonalWebsite.ContentSyncFunction.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 internal class Post
 {

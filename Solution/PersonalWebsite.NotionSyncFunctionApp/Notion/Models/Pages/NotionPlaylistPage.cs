@@ -1,8 +1,8 @@
-﻿using PersonalWebsite.ContentSyncFunction.Notion.Properties;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Properties;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Pages;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Pages;
 
 class NotionPlaylistPage : NotionPage
 {
-    public NotionPlaylistProperties Properties { get; set; }
+	public NotionPlaylistProperties Properties { get; set; }
 }

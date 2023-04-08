@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PersonalWebsite.ContentSyncFunction.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 internal class Playlist
 {
@@ -12,7 +12,7 @@ internal class Playlist
 	public string Description { get; set; }
 
 	public DateTime CreatedAt { get; set; }
-	 
+
 	public string Category { get; set; }
 
 	public List<string> Posts { get; set; }

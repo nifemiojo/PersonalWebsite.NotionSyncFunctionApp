@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using PersonalWebsite.ContentSyncFunction.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 
 internal class EditedContent
 {

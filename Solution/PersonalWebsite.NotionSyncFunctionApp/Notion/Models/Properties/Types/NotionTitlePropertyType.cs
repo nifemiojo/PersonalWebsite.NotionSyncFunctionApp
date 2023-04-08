@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Properties.PageProperty;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Properties.Types;
 
 internal class NotionTitlePropertyType : NotionPagePropertyType
 {
-    public List<NotionRichText> Title { get; set; }
+	public List<NotionRichText> Title { get; set; }
 }

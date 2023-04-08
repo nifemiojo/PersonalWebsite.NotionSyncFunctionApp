@@ -1,6 +1,6 @@
-﻿using PersonalWebsite.ContentSyncFunction.Notion.Properties;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Properties;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Pages;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Pages;
 
 class NotionPostPage : NotionPage
 {

@@ -1,8 +1,8 @@
-﻿namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
 public class NotionText
 {
-    public string Content { get; set; }
+	public string Content { get; set; }
 
-    public NotionTextLink Link { get; set; }
+	public NotionTextLink Link { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿using PersonalWebsite.ContentSyncFunction.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace PersonalWebsite.ContentSyncFunction.HTML;
+namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
 public class HtmlParagraph : HtmlElement
 {

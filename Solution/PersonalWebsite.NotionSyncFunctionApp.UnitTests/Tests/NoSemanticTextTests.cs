@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using FluentAssertions;
 using NUnit.Framework;
-using PersonalWebsite.ContentSyncFunction.HTML;
-using PersonalWebsite.ContentSyncFunction.Notion.Models.Values;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
 
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 class NoSemanticTextTests : NotionRichTextToHtmlConversionTests
 {

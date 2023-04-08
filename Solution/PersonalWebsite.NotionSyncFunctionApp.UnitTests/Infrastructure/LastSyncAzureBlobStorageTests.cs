@@ -3,10 +3,10 @@ using Azure.Storage.Blobs.Models;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using PersonalWebsite.ContentSyncFunction;
-using PersonalWebsite.ContentSyncFunction.Common;
+using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
 
-namespace PersonalWebsite.ContentSync.UnitTests.Infrastructure;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Infrastructure;
 
 [TestFixture]
 internal class LastSyncTimestampAzureBlobTests
@@ -22,7 +22,7 @@ internal class LastSyncTimestampAzureBlobTests
     }
 
     [Test]
-    public async Task Retrieve_ReturnsIsFirstSyncTrue_WhenBlobDoesNotExist()
+    public async Task Retrieve_ReturnsNoPreviousSyncType_WhenBlobDoesNotExist()
     {
         var lastSyncTimestampBlobClient = Substitute.For<BlobClient>();
         var falseResponse = Substitute.For<Azure.Response<bool>>();
@@ -33,7 +33,7 @@ internal class LastSyncTimestampAzureBlobTests
 
         var actualLastSync = await sut.Retrieve();
 
-        actualLastSync.IsFirstSync.Should().BeTrue();
+        actualLastSync.Should().BeOfType<NoPreviousLastSync>();
     }
 
     [Test]
@@ -48,9 +48,11 @@ internal class LastSyncTimestampAzureBlobTests
 			.Returns(trueResponse);
 
 		var response = Substitute.For<Azure.Response<BlobDownloadResult>>();
-		var downloadResult = Substitute.For<BlobDownloadResult>();
-        downloadResult.Content.Returns(BinaryData.FromString("2022-02-25T18:03:44"));
-		response.Value.Returns(downloadResult);
+		var blobDownloadResult = (BlobDownloadResult) Activator.CreateInstance(typeof(BlobDownloadResult), true)!;
+        var contentProperty = blobDownloadResult.GetType().GetProperty("Content");
+        contentProperty!.SetValue(blobDownloadResult, BinaryData.FromString("2022-02-25T18:03:44"));
+
+		response.Value.Returns(blobDownloadResult);
 		lastSyncTimestampBlobClient
 	        .DownloadContentAsync()
 	        .Returns(response);
@@ -59,6 +61,6 @@ internal class LastSyncTimestampAzureBlobTests
 
 		var actualLastSync = await sut.Retrieve();
 
-		actualLastSync.Timestamp.Should().Be(Iso8601DateTime.FromString("2022-02-25T18:03:44"));
+		actualLastSync.Timestamp.ToString().Should().Be("2022-02-25T18:03:44");
     }
 }

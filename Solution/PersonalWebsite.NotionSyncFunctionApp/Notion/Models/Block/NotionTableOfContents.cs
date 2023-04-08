@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PersonalWebsite.ContentSyncFunction.Notion.Models.Block;
+namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Block;
 
 internal class NotionTableOfContents
 {
