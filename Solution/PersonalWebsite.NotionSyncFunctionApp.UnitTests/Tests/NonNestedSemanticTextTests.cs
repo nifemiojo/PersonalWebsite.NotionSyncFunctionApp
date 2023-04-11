@@ -1,7 +1,6 @@
 ﻿using PersonalWebsite.NotionSyncFunctionApp.Common;
-using PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 /// <summary>
 /// Covers all cases where each NotionRichTextObject only has one inline text semantic active

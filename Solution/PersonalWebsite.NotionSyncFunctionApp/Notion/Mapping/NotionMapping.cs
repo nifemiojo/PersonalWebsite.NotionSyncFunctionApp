@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Pages;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Pages;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Mapping;
 
@@ -10,7 +10,7 @@ internal class NotionMapper
 {
 	private static string NotionTimeFormat => "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffK";
 
-	public static Category Map(NotionCategoryPage notionCategory)
+	public static Category Map(NotionCategoryPageDto notionCategory)
 	{
 		return new Category()
 		{
@@ -20,7 +20,7 @@ internal class NotionMapper
 		};
 	}
 
-	public static Playlist Map(NotionPlaylistPage notionPlaylist)
+	public static Playlist Map(NotionPlaylistPageDto notionPlaylist)
 	{
 		return new Playlist()
 		{
@@ -34,7 +34,7 @@ internal class NotionMapper
 		};
 	}
 
-	public static Post Map(NotionPostPage notionPost)
+	public static Post Map(NotionPostPageDto notionPost)
 	{
 		return new Post()
 		{

@@ -9,12 +9,13 @@ using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Pages;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Exceptions;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Mapping;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Block;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Pages;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Request;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Response;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 
@@ -54,9 +55,9 @@ internal class NotionService : INotionService
 		string notionPlaylistDatabaseId = "";
 		string notionPostDatabaseId = "";
 
-		var categoryPages = await GetUpdatedPagesFromNotionDatabase<NotionCategoryPage>(notionCategoryDatabaseId, queryBody);
-		var playlistPages = await GetUpdatedPagesFromNotionDatabase<NotionPlaylistPage>(notionPlaylistDatabaseId, queryBody);
-		var postPages = await GetUpdatedPagesFromNotionDatabase<NotionPostPage>(notionPostDatabaseId, queryBody);
+		var categoryPages = await GetUpdatedPagesFromNotionDatabase<NotionCategoryPageDto>(notionCategoryDatabaseId, queryBody);
+		var playlistPages = await GetUpdatedPagesFromNotionDatabase<NotionPlaylistPageDto>(notionPlaylistDatabaseId, queryBody);
+		var postPages = await GetUpdatedPagesFromNotionDatabase<NotionPostPageDto>(notionPostDatabaseId, queryBody);
 
 		// Get Page Content For Post Pages
 		var postsContent = await GetPostsToBeUpdatedContent(postPages.Results.Select(notionPost => notionPost.Id).ToList());
@@ -86,7 +87,7 @@ internal class NotionService : INotionService
 		foreach (var postId in postIds)
 		{
 			var responseMessage = await GetBlockChildren(postId);
-			var postBlocks = await GetNotionListResponse<NotionBlock>(responseMessage);
+			var postBlocks = await GetNotionListResponse<NotionBlockDto>(responseMessage);
 			postsDictionary.Add(new NotionPageContent { PageId = postId, Content = postBlocks.Results });
 		}
 
@@ -94,7 +95,7 @@ internal class NotionService : INotionService
 	}
 
 	private async Task<NotionListResponse<TNotionResponseType>> GetUpdatedPagesFromNotionDatabase<TNotionResponseType>(string notionDatabaseId, NotionDatabaseQuery query)
-		where TNotionResponseType : NotionPage
+		where TNotionResponseType : NotionPageDto
 	{
 		var responseMessage = await QueryNotionDatabase(notionDatabaseId, query);
 		return await GetNotionListResponse<TNotionResponseType>(responseMessage);
@@ -113,7 +114,7 @@ internal class NotionService : INotionService
 		}
 	}
 
-	private async Task<Iso8601DateTime> GetLastExecutedSync()
+	private async Task<Iso8601FormattedDateTime> GetLastExecutedSync()
 	{
 		// Uri should be in config and be split into account name + container name
 		var blobClient = new BlobClient(new Uri("https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}"),
@@ -122,7 +123,7 @@ internal class NotionService : INotionService
 		BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
 		string downloadedData = downloadResult.Content.ToString();
 
-		return Iso8601DateTime.FromString(downloadedData);
+		return Iso8601FormattedDateTime.CreateFromValid(downloadedData);
 	}
 
 	private async Task<HttpResponseMessage> QueryNotionDatabase(string notionDatabaseId, NotionDatabaseQuery query)

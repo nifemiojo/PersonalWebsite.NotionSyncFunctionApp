@@ -16,11 +16,13 @@ namespace PersonalWebsite.NotionSyncFunctionApp
     public class NotionSyncFunctionApp
     {
         private readonly ILogger<NotionSyncFunctionApp> _logger;
+        private readonly ILastSyncTimestampStorage _lastSyncTimestampStorage;
 
         public NotionSyncFunctionApp(ILogger<NotionSyncFunctionApp> log,
 	        ILastSyncTimestampStorage lastSyncTimestampStorage)
         {
 	        _logger = log;
+	        _lastSyncTimestampStorage = lastSyncTimestampStorage;
         }
 
         [FunctionName("sync")]
@@ -33,7 +35,11 @@ namespace PersonalWebsite.NotionSyncFunctionApp
         {
 	        try
 	        {
+                var lastSync = await _lastSyncTimestampStorage.Retrieve();
+                await _lastSyncTimestampStorage.Upsert();
+
 				_logger.LogInformation("C# HTTP trigger function processed a request.");
+				return new OkObjectResult("Izz Okay");
 
 	        }
 	        catch (Exception e)
@@ -41,8 +47,6 @@ namespace PersonalWebsite.NotionSyncFunctionApp
 		        Console.WriteLine(e);
 		        throw;
 	        }
-
-            return new OkObjectResult("Izz Okay");
         }
     }
 }

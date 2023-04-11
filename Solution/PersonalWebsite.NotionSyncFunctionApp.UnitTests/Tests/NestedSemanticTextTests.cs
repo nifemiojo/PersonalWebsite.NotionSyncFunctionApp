@@ -1,6 +1,4 @@
-﻿using PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
-
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 partial class NestedSemanticTextTests : NotionRichTextToHtmlConversionTests
 {

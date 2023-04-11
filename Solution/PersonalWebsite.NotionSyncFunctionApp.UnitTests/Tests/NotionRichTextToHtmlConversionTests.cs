@@ -3,7 +3,7 @@ using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 

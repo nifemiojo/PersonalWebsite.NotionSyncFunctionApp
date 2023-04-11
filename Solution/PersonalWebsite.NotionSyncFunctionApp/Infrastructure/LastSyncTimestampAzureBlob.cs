@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Storage.Blobs;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Exceptions;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
 
@@ -16,16 +20,34 @@ public class LastSyncTimestampAzureBlob : ILastSyncTimestampStorage
 
     public async Task<LastSync> Retrieve()
     {
-        // Get the last sync timestamp from blob storage as a string
-        if (!(await _lastSyncBlobClient.ExistsAsync()).Value)
-        {
-            // Set lastSyncTimestamp to the oldest possible DateTime
-            return new NoPreviousLastSync();
-        }
+	    try
+	    {
+	        if (!(await _lastSyncBlobClient.ExistsAsync()).Value)
+	        {
+	            return new NoPreviousLastSync();
+	        }
 
-        var blobDownloadResult = await _lastSyncBlobClient.DownloadContentAsync();
-        var lastSyncTimestamp = blobDownloadResult.Value.Content.ToString();
+	        var blobDownloadResult = await _lastSyncBlobClient.DownloadContentAsync();
+	        var lastSyncTimestamp = blobDownloadResult.Value.Content.ToString();
 
-        return new LastSync(lastSyncTimestamp);
+	        return new LastSync(lastSyncTimestamp);
+	    }
+	    catch (RequestFailedException requestFailedException)
+	    {
+		    throw new BlobClientRequestException($"Error trying to retrieve the last sync timestamp blob from: {_lastSyncBlobClient.Uri}.", requestFailedException);
+	    }
     }
+
+    public async Task Upsert()
+    {
+	    try
+	    {
+	        var formattedDateTime = Iso8601FormattedDateTime.CreateFrom(DateTime.UtcNow);
+			await _lastSyncBlobClient.UploadAsync(BinaryData.FromString(formattedDateTime.Value), overwrite: true);
+	    }
+	    catch (RequestFailedException requestFailedException)
+	    {
+		    throw new BlobClientRequestException($"Error trying to upsert the last sync timestamp blob to: {_lastSyncBlobClient.Uri}.", requestFailedException);
+	    }
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 

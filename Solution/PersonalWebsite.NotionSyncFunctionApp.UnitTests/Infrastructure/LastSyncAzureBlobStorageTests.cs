@@ -1,10 +1,13 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
+using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Exceptions;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Infrastructure;
 
@@ -50,7 +53,7 @@ internal class LastSyncTimestampAzureBlobTests
 		var response = Substitute.For<Azure.Response<BlobDownloadResult>>();
 		var blobDownloadResult = (BlobDownloadResult) Activator.CreateInstance(typeof(BlobDownloadResult), true)!;
         var contentProperty = blobDownloadResult.GetType().GetProperty("Content");
-        contentProperty!.SetValue(blobDownloadResult, BinaryData.FromString("2022-02-25T18:03:44"));
+        contentProperty!.SetValue(blobDownloadResult, BinaryData.FromString("2023-03-02T04:27:00.55Z"));
 
 		response.Value.Returns(blobDownloadResult);
 		lastSyncTimestampBlobClient
@@ -61,6 +64,24 @@ internal class LastSyncTimestampAzureBlobTests
 
 		var actualLastSync = await sut.Retrieve();
 
-		actualLastSync.Timestamp.ToString().Should().Be("2022-02-25T18:03:44");
+		actualLastSync.Timestamp.Value.Should().Be("2023-03-02T04:27:00.55Z");
     }
+
+    [Test]
+    public async Task Retrieve_ThrowsBlobClientRequestException_WhenBlobClientThrowsRequestFailedException()
+    {
+		var lastSyncTimestampBlobClient = Substitute.For<BlobClient>();
+
+		var trueResponse = Substitute.For<Azure.Response<bool>>();
+		trueResponse.Value.Returns(true);
+		lastSyncTimestampBlobClient.ExistsAsync().Returns(trueResponse);
+
+		lastSyncTimestampBlobClient.DownloadContentAsync().Throws(new RequestFailedException("This is the Azure message"));
+
+		var sut = new LastSyncTimestampAzureBlob(lastSyncTimestampBlobClient);
+
+		Func<Task> act = async () => await sut.Retrieve();
+
+		await act.Should().ThrowAsync<BlobClientRequestException>();
+	}
 }

@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 

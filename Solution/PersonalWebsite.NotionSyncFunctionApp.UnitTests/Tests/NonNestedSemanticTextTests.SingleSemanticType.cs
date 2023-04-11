@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 /// <summary>
 /// These tests cover cases where there is only a single active semantic type present in the entire input array of NotionRichTextObjects

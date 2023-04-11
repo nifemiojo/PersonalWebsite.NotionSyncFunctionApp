@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models.Objects;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
-namespace PersonalWebsite.ContentSync.Tests.Tests;
+namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 /// <summary>
 /// These tests cover where there is at least one RTO that has at most two text semantics.

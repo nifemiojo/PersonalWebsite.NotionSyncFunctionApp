@@ -13,7 +13,7 @@ public class NoPreviousLastSync : LastSync
     {
     }
 
-    private NoPreviousLastSync(Iso8601DateTime timestamp) : base(timestamp)
+    private NoPreviousLastSync(Iso8601FormattedDateTime timestamp) : base(timestamp)
     {
     }
 
