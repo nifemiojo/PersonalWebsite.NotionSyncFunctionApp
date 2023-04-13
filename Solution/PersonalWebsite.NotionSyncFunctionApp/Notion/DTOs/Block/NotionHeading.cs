@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
 
-internal class NotionHeading
+public class NotionHeading
 {
 	[JsonPropertyName("rich_text")]
 	public List<NotionRichText> RichText { get; set; }

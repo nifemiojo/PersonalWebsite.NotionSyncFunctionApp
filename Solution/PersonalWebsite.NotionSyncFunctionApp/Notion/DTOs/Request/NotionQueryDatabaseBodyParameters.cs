@@ -1,6 +1,6 @@
 ﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 
-internal class NotionDatabaseQuery
+public class NotionQueryDatabaseBodyParameters
 {
     public NotionFilter Filter { get; set; }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Pages;
 
-internal abstract class NotionPageDto
+public abstract class NotionPageDto
 {
 	public string Object { get; set; }
 
@@ -13,4 +14,6 @@ internal abstract class NotionPageDto
 
 	[JsonPropertyName("last_edited_time")]
 	public string LastEditedTime { get; set; }
+
+	public abstract IDomainEntity Map();
 }

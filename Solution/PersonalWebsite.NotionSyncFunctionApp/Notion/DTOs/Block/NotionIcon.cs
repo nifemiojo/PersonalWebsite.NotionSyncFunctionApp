@@ -1,6 +1,6 @@
 ﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
 
-internal class NotionIcon
+public class NotionIcon
 {
 }
 

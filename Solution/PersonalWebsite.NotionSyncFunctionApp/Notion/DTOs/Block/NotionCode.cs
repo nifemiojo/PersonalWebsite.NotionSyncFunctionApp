@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
 
-internal class NotionCode
+public class NotionCode
 {
 	public List<NotionRichText> Caption { get; set; }
 

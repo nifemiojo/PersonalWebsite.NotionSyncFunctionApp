@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using PersonalWebsite.NotionSyncFunctionApp.Common;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-internal class Playlist
+internal class Playlist : IDomainEntity
 {
-	public string Id { get; set; }
+	public string NotionPageId { get; set; }
 
 	public string Name { get; set; }
 
 	public string Description { get; set; }
 
-	public DateTime CreatedAt { get; set; }
+	public Iso8601FormattedDateTime CreatedAt { get; set; }
 
 	public string Category { get; set; }
 
 	public List<string> Posts { get; set; }
 
-	public DateTime LastEditedTime { get; set; }
+	public Iso8601FormattedDateTime LastEditedTime { get; set; }
 }

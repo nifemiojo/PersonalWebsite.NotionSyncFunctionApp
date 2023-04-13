@@ -3,7 +3,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
-internal class NotionFile : NotionIcon
+public class NotionFile : NotionIcon
 {
 	public string Type { get; set; }
 }

@@ -15,7 +15,8 @@ public class NotionRichText
 
 	public NotionTextAnnotation Annotation { get; set; }
 
-	[JsonPropertyName("plain_text")] public string PlainText { get; set; }
+	[JsonPropertyName("plain_text")] 
+	public string PlainText { get; set; }
 
 	public string? Href { get; set; }
 

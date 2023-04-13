@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
 
-internal class NotionListResponse<TNotionObject>
+public class NotionListResponse<TNotionObject>
 {
     public string Object { get; set; }
 

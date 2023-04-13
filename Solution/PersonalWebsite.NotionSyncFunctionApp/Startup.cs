@@ -9,6 +9,7 @@ using PersonalWebsite.NotionSyncFunctionApp;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
 using PersonalWebsite.NotionSyncFunctionApp.Notion;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -18,6 +19,12 @@ public class Startup : FunctionsStartup
 {
 	public override void Configure(IFunctionsHostBuilder builder)
 	{
+		builder.Services.AddOptions<NotionOptions>()
+			.Configure<IConfiguration>((settings, configuration) =>
+			{
+				configuration.GetSection("Notion").Bind(settings);
+			});
+
 		var storageAccountName = builder.GetContext().Configuration.GetValue<string>("AzureWebJobsStorage:accountName");
 		var storageContainerName = builder.GetContext().Configuration.GetValue<string>("AzureWebJobsStorage:containerName");
 		var storageBlobName = builder.GetContext().Configuration.GetValue<string>("AzureWebJobsStorage:blobName");
@@ -30,15 +37,15 @@ public class Startup : FunctionsStartup
 					new DefaultAzureCredential()));
 		});
 
-		builder.Services.AddSingleton<ILastSyncTimestampStorage, LastSyncTimestampAzureBlob>();
-
-		builder.Services.AddHttpClient<NotionApiClient>(httpClient =>
+		builder.Services.AddHttpClient<INotionClient, NotionClient>(httpClient =>
 		{
 			httpClient.BaseAddress = new Uri("https://api.notion.com/");
 			httpClient.DefaultRequestHeaders.Add("Notion-Version", "2022-06-28");
+			httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.GetContext().Configuration.GetValue<string>("Notion:accountKey")}");
 			httpClient.Timeout = TimeSpan.FromSeconds(3);
 		});
 
+		builder.Services.AddSingleton<ILastSyncTimestampStorage, LastSyncTimestampAzureBlob>();
 		// builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();
 	}
 }

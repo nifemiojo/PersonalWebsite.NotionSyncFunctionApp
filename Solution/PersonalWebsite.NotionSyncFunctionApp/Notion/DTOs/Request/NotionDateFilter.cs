@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 
-internal class NotionDateFilter
+public class NotionDateFilter
 {
     [JsonPropertyName("on_or_after")]
     public string OnOrAfter { get; set; }

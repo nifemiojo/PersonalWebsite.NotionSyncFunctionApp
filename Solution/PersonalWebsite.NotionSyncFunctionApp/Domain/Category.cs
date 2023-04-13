@@ -1,10 +1,15 @@
-﻿namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Common;
+using System.Collections.Generic;
 
-internal class Category
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
+
+internal class Category : IDomainEntity
 {
-	public string Id { get; set; }
+	public string NotionPageId { get; set; }
 
 	public string Name { get; set; }
 
-	public string LastEditedTime { get; set; }
+	public Iso8601FormattedDateTime CreatedAt { get; set; }
+
+	public Iso8601FormattedDateTime LastEditedTime { get; set; }
 }

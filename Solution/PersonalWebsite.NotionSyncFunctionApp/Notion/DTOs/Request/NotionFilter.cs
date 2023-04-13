@@ -1,6 +1,6 @@
 ﻿namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 
-internal class NotionFilter
+public class NotionFilter
 {
     public string Property { get; set; }
 

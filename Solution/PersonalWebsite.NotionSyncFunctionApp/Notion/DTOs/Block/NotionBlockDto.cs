@@ -3,7 +3,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Block;
 
-internal class NotionBlockDto
+public class NotionBlockDto
 {
 	public string Id { get; set; }
 
