@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 

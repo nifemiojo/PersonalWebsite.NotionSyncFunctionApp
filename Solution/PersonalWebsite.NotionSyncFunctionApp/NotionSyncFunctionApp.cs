@@ -11,8 +11,8 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Notion;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Pages;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 
 namespace PersonalWebsite.NotionSyncFunctionApp;
@@ -46,7 +46,7 @@ public class NotionSyncFunctionApp
 			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);
 			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);
 
-			var response = await _notionClient.QueryDatabaseAsync<NotionCategoryPageDto>("66df5294a76a454b914bf659e1a41d41",
+			var response = await _notionClient.QueryDatabaseAsync<NotionCategoryPage>("66df5294a76a454b914bf659e1a41d41",
 				new NotionQueryDatabaseBodyParameters
 				{
 					Filter = new NotionFilter

@@ -18,5 +18,10 @@ internal class Post : IDomainEntity
 
 	public Iso8601FormattedDateTime LastEditedTime { get; set; }
 
-	public string Content { get; set; }
+	public PostContent Content { get; set; }
+}
+
+public class PostContent
+{
+	public string Html { get; set; }
 }

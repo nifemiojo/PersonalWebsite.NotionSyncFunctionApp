@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonalWebsite.NotionSyncFunctionApp;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
-using PersonalWebsite.NotionSyncFunctionApp.Notion;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 
 [assembly: FunctionsStartup(typeof(Startup))]
