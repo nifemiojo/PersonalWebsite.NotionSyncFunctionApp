@@ -3,13 +3,13 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
-public class NotionPostPageModel : NotionPageModel
+public class NotionPostPageWithBlocksModel : NotionPageWithBlocksModel
 {
     public override IDomainEntity Map()
     {
-        var domainEntity = Properties.Map();
+        var domainEntity = Page.MapToDomain();
 
-        string contentAsHtml = NotionConversion.ConvertPageBlocksToHtml(Content);
+        string contentAsHtml = NotionConversion.ConvertPageBlocksToHtml(Blocks);
 
         (domainEntity as Post).Content = new PostContent { Html = contentAsHtml };
 

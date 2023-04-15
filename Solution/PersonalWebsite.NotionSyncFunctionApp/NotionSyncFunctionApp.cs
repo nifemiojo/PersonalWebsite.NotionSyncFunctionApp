@@ -39,12 +39,12 @@ public class NotionSyncFunctionApp
 	{
 		try
 		{
-			List<IBlogEntity> databasePages = getUpdatedNotionPagesQuery.Execute();
+			/*List<IBlogEntity> databasePages = getUpdatedNotionPagesQuery.Execute();
 			updateBlogEntities.Update();
 
 			List<NotionCategoryModel> queryResponse = getUpdatedNotionDatabasePages.Query(UpdatedNotionDatabasePagesRequest postDatabaseQuery);
 			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);
-			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);
+			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);*/
 
 			var response = await _notionClient.QueryDatabaseAsync<NotionCategoryPage>("66df5294a76a454b914bf659e1a41d41",
 				new NotionQueryDatabaseBodyParameters

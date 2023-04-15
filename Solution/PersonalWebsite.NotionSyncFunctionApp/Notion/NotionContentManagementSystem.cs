@@ -8,8 +8,10 @@ using PersonalWebsite.NotionSyncFunctionApp.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Constants;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
@@ -25,70 +27,72 @@ class NotionContentManagementSystem : IContentManagementSystem
 		_settings = options.Value;
     }
 
-    public async Task<List<IDomainEntity>> GetUpdatedEntitiesAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : IDomainEntity
+    public async Task<List<IDomainEntity>> GetUpdatedAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : IDomainEntity
     {
 	    return typeof(TDomainEntity) switch
 	    {
 		    _ when typeof(TDomainEntity) == typeof(Category)
-			    => await GetUpdatedEntitiesPagePropertiesAsync<NotionCategoryPage>(_settings.Databases.CategoriesDatabaseId, lastSync),
+			    => await GetUpdatedPagesAsync<NotionCategoryPage>(_settings.Databases.CategoriesDatabaseId, lastSync),
 		    _ when typeof(TDomainEntity) == typeof(Playlist)
-			    => await GetUpdatedEntitiesPagePropertiesAsync<NotionPlaylistPage>(_settings.Databases.PlaylistsDatabaseId, lastSync),
+			    => await GetUpdatedPagesAsync<NotionPlaylistPage>(_settings.Databases.PlaylistsDatabaseId, lastSync),
 		    _ when typeof(TDomainEntity) == typeof(Post)
-			    => await GetUpdatedEntitiesFullPageAsync<NotionPostPage>(_settings.Databases.PostsDatabaseId, lastSync, new NotionPostPageModel()),
+			    => await GetUpdatedPagesWithBlocksAsync<NotionPostPage>(_settings.Databases.PostsDatabaseId, lastSync, new NotionPostPageWithBlocksModel()),
 		    _
 			    => throw new Exception()
 	    };
     }
 
-    private async Task<List<IDomainEntity>> GetUpdatedEntitiesPagePropertiesAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
+    private async Task<List<IDomainEntity>> GetUpdatedPagesAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
     {
-	    var res = await _notionClient.QueryDatabaseAsync<T>(databaseId,
-		    new NotionQueryDatabaseBodyParameters
-		    {
-			    Filter = new NotionFilter
-			    {
-				    Property = NotionDatabaseConstants.LastEditedProperty,
-				    Date = new NotionDateFilter
-				    {
-					    OnOrAfter = lastSync.Timestamp.Value
-				    }
-			    }
-		    });
+	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
-	    return res.Results
-		    .Select(x => x.Map())
-		    .ToList();
+	    return MapPagesToDomainEntities(paginatedResponse.Results);
     }
-    
-    private async Task<List<IDomainEntity>> GetUpdatedEntitiesFullPageAsync<T>(string databaseId, LastSync lastSync, NotionPageModel pageModel) where T : NotionPage
-    {
-	    var res = await _notionClient.QueryDatabaseAsync<T>(databaseId,
-		    new NotionQueryDatabaseBodyParameters
-		    {
-			    Filter = new NotionFilter
-			    {
-				    Property = NotionDatabaseConstants.LastEditedProperty,
-				    Date = new NotionDateFilter
-				    {
-					    OnOrAfter = lastSync.Timestamp.Value
-				    }
-			    }
-		    });
 
-	    var pageProperties = res.Results;
+    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync, NotionPageWithBlocksModel pageWithBlocksModel) where T : NotionPage
+    {
+	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
 	    var entities = new List<IDomainEntity>();
 
-		foreach (var notionPageDto in pageProperties)
+		foreach (var page in paginatedResponse.Results)
 		{
-			pageModel.Properties = notionPageDto;
+			var paginatedResponseBlocks = await GetBlocksForPageAsync(page.Id);
 
-			var blocks = await _notionClient.RetrieveBlockChildrenAsync(notionPageDto.Id);
-			pageModel.Content = blocks.Results;
+			pageWithBlocksModel.Page = page;
+			pageWithBlocksModel.Blocks = paginatedResponseBlocks.Results;
 
-		    entities.Add(pageModel.Map());
+		    entities.Add(pageWithBlocksModel.Map());
 		}
 
 		return entities;
+    }
+
+    private async Task<NotionPaginatedResponse<T>> GetPagesDatabaseQueryAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
+    {
+	    return await _notionClient.QueryDatabaseAsync<T>(databaseId,
+		    new NotionQueryDatabaseBodyParameters
+		    {
+			    Filter = new NotionFilter
+			    {
+				    Property = NotionDatabaseConstants.LastEditedProperty,
+				    Date = new NotionDateFilter
+				    {
+					    OnOrAfter = lastSync.Timestamp.Value
+				    }
+			    }
+		    });
+    }
+
+    private async Task<NotionPaginatedResponse<NotionBlock>> GetBlocksForPageAsync(string pageId)
+    {
+	    return await _notionClient.RetrieveBlockChildrenAsync(pageId);
+    }
+
+    private static List<IDomainEntity> MapPagesToDomainEntities<T>(List<T> pages) where T : NotionPage
+    {
+	    return pages
+		    .Select(notionPage => notionPage.MapToDomain())
+		    .ToList();
     }
 }

@@ -5,11 +5,11 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
-public abstract class NotionPageModel
+public abstract class NotionPageWithBlocksModel
 {
-    public NotionPage Properties { get; set; }
+    public NotionPage Page { get; set; }
 
-    public List<NotionBlock> Content { get; set; }
+    public List<NotionBlock> Blocks { get; set; }
 
     public abstract IDomainEntity Map();
 }

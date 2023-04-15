@@ -3,7 +3,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.Collections;
 
-internal abstract class NotionPagePropertiesCollection
+public abstract class NotionPagePropertiesCollection
 {
     [JsonPropertyName("Title")]
     public NotionPageTitleProperty Title { get; set; }

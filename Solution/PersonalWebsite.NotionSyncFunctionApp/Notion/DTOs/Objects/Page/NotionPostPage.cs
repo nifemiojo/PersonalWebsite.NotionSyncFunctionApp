@@ -9,7 +9,7 @@ class NotionPostPage : NotionPage
 {
     public NotionPostsPagePropertiesCollection Properties { get; set; }
 
-    public override IDomainEntity Map()
+    public override IDomainEntity MapToDomain()
     {
         return new Post
         {

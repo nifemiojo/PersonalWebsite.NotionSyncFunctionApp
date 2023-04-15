@@ -6,7 +6,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 
-internal interface INotionClient
+public interface INotionClient
 {
     Task<NotionPaginatedResponse<T>> QueryDatabaseAsync<T>(string notionDatabaseId, NotionQueryDatabaseBodyParameters bodyParameters) where T : NotionPage;
 

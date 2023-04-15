@@ -11,7 +11,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.Exceptions;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 
-internal class NotionClient : INotionClient
+public class NotionClient : INotionClient
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonSerializerOptions = new(JsonSerializerDefaults.Web);
