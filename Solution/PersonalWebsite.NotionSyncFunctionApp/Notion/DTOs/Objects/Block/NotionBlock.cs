@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block.Types;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
@@ -7,7 +8,7 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 public class NotionBlock : BaseNotionObject
 {
     [JsonPropertyName("has_children")]
-    public string HasChildren { get; set; }
+    public bool HasChildren { get; set; }
 
     public string Type { get; set; }
 
@@ -34,4 +35,6 @@ public class NotionBlock : BaseNotionObject
     public NotionParagraph Paragraph { get; set; }
 
     public NotionQuote Quote { get; set; }
+
+    public List<NotionBlock> ChildBlocks { get; set; }
 }

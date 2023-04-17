@@ -20,6 +20,7 @@ public class NotionRichText
 
     public string? Href { get; set; }
 
+    // TODO: Separate the behaviour from the data. This class should be a data class.
     public int TextSemanticsCount => GetTextSemantics().Count;
 
     public bool GetTextSemanticState(InlineTextSemantic inlineTextSemantic)

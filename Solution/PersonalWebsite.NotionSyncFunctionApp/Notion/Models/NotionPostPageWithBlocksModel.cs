@@ -5,13 +5,11 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
 public class NotionPostPageWithBlocksModel : NotionPageWithBlocksModel
 {
-    public override IDomainEntity Map()
+    public override IDomainEntity Map(PostContent postContent)
     {
         var domainEntity = Page.MapToDomain();
 
-        string contentAsHtml = NotionConversion.ConvertPageBlocksToHtml(Blocks);
-
-        (domainEntity as Post).Content = new PostContent { Html = contentAsHtml };
+        (domainEntity as Post).Content = postContent;
 
         return domainEntity;
     }

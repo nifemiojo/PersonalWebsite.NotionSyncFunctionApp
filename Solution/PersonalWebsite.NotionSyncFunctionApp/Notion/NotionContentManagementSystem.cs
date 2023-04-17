@@ -8,23 +8,30 @@ using PersonalWebsite.NotionSyncFunctionApp.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Constants;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 
 class NotionContentManagementSystem : IContentManagementSystem
 {
     private readonly INotionClient _notionClient;
+    private readonly INotionConversion _notionConversion;
     private readonly NotionOptions _settings;
 
-    public NotionContentManagementSystem(INotionClient notionClient, IOptions<NotionOptions> options)
+    public NotionContentManagementSystem(
+	    INotionClient notionClient,
+	    IOptions<NotionOptions> options,
+	    INotionConversion notionConversion)
     {
         _notionClient = notionClient;
-		_settings = options.Value;
+        _notionConversion = notionConversion;
+        _settings = options.Value;
     }
 
     public async Task<List<IDomainEntity>> GetUpdatedAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : IDomainEntity
@@ -36,7 +43,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 		    _ when typeof(TDomainEntity) == typeof(Playlist)
 			    => await GetUpdatedPagesAsync<NotionPlaylistPage>(_settings.Databases.PlaylistsDatabaseId, lastSync),
 		    _ when typeof(TDomainEntity) == typeof(Post)
-			    => await GetUpdatedPagesWithBlocksAsync<NotionPostPage>(_settings.Databases.PostsDatabaseId, lastSync, new NotionPostPageWithBlocksModel()),
+			    => await GetUpdatedPagesWithBlocksAsync<NotionPostPage>(_settings.Databases.PostsDatabaseId, lastSync),
 		    _
 			    => throw new Exception()
 	    };
@@ -49,7 +56,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 	    return MapPagesToDomainEntities(paginatedResponse.Results);
     }
 
-    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync, NotionPageWithBlocksModel pageWithBlocksModel) where T : NotionPage
+    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
     {
 	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
@@ -57,15 +64,47 @@ class NotionContentManagementSystem : IContentManagementSystem
 
 		foreach (var page in paginatedResponse.Results)
 		{
-			var paginatedResponseBlocks = await GetBlocksForPageAsync(page.Id);
+			var domainEntity = GetContentBasedEntity(typeof(T));
 
-			pageWithBlocksModel.Page = page;
-			pageWithBlocksModel.Blocks = paginatedResponseBlocks.Results;
+			var paginatedResponseBlocks = await GetChildBlocksAsync(page.Id);
+			foreach (var notionBlock in paginatedResponseBlocks.Results)
+			{
+				await NestChildBlocks<T>(notionBlock);
+			}
 
-		    entities.Add(pageWithBlocksModel.Map());
+			var html = _notionConversion.ConvertBlocksToHtml(paginatedResponseBlocks.Results);
+
+			domainEntity.Content = new PostContent { Html = html };
+
+			entities.Add(domainEntity);
 		}
 
 		return entities;
+    }
+
+    private async Task NestChildBlocks<T>(NotionBlock notionBlock) where T : NotionPage
+    {
+	    if (notionBlock.HasChildren)
+	    {
+		    var childBlocks = await GetChildBlocksAsync(notionBlock.Id);
+
+		    foreach (var childBlock in childBlocks.Results)
+		    {
+			    notionBlock.ChildBlocks.Add(childBlock);
+			    await NestChildBlocks<T>(childBlock);
+		    }
+	    }
+    }
+
+    private ContentBasedEntity GetContentBasedEntity(Type type)
+    {
+	    return type switch
+	    {
+		    _ when type == typeof(NotionPostPage)
+			    => new Post(),
+		    _
+			    => throw new Exception()
+	    };
     }
 
     private async Task<NotionPaginatedResponse<T>> GetPagesDatabaseQueryAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
@@ -84,7 +123,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 		    });
     }
 
-    private async Task<NotionPaginatedResponse<NotionBlock>> GetBlocksForPageAsync(string pageId)
+    private async Task<NotionPaginatedResponse<NotionBlock>> GetChildBlocksAsync(string pageId)
     {
 	    return await _notionClient.RetrieveBlockChildrenAsync(pageId);
     }
