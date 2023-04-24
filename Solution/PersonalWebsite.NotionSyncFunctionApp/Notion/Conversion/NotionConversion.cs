@@ -1,46 +1,88 @@
 using System;
 using System.Collections.Generic;
+using PersonalWebsite.NotionSyncFunctionApp.HTML;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
 public class NotionConversion : INotionConversion
 {
-	public NotionConversion(IBlockConverter blockConverter)
+	private readonly INotionRichTextToHtmlConversion _notionRichTextToHtmlConversion;
+
+	public NotionConversion(IBlockConverter blockConverter, INotionRichTextToHtmlConversion notionRichTextToHtmlConversion)
 	{
-		
+		_notionRichTextToHtmlConversion = notionRichTextToHtmlConversion;
 	}
 
 	public string ConvertBlocksToHtml(List<NotionBlock> blocks)
 	{
-		List<string> convertedBlocks = new List<string>();
+		for (int topLevelBlockIndex = 0; topLevelBlockIndex < blocks.Count; topLevelBlockIndex++)
+		{
+			if (blocks[topLevelBlockIndex].Type  == "bulleted_list_item")
+			{
+				//  Get the blocks in the list
+				List<NotionBlock> blocksThatMakeUpList = ExtractBlocksThatMakeUpTheList(topLevelBlockIndex, blocks);
 
-		foreach (var topLevelBlock in blocks)
-	    {
-		    if (topLevelBlock.HasChildren)
-		    {
-			    foreach (var block in topLevelBlock.ChildBlocks)
-			    {
-				    convertedBlocks.Add(ConvertBlocksToHtml(block));
-			    }
-				convertedBlocks.Add(ConvertBlocksToHtml(topLevelBlock));
-		    }
-	    }
+				// Build top level list -- recursively attain list items
+				HtmlElement unorderedElement = GetUnorderedList(blocksThatMakeUpList);
 
-	    return "";
-    }
-    
-    private string ConvertBlocksToHtml(NotionBlock block)
-    {
-	    if (block.HasChildren)
-	    {
+				// Add top level block to the list
+
+				// Adjust the index to skip the blocks that make up the list
+			}
 			
-	    }
-		var convertedLeaf = ConvertLeafBlockToHtml(block);
+		}
     }
 
-    private string ConvertLeafBlockToHtml(NotionBlock block)
+	private HtmlElement GetUnorderedList(List<NotionBlock> topLevelListBlocks)
+	{
+		HtmlUnorderedListElement unorderedListElement = new HtmlUnorderedListElement();
+
+		foreach (NotionBlock topLevelListBlock in topLevelListBlocks)
+		{
+			// Recursively get the list items
+			HtmlListItem listItem = GenerateListItem(topLevelListBlock);
+		}
+
+		return unorderedListElement;
+	}
+
+	private HtmlListItem GenerateListItem(NotionBlock topLevelListBlock)
+	{
+		HtmlUnorderedListElement nestedUnorderedListElement = new HtmlUnorderedListElement();
+
+		if (topLevelListBlock.HasChildren)
+		{
+			foreach (NotionBlock childBlock in topLevelListBlock.ChildBlocks)
+			{
+				if (childBlock.Type == "bulleted_list_item")
+				{
+					HtmlListItem nestedListItem = GenerateListItem(childBlock);
+					nestedUnorderedListElement.AddChild(nestedListItem);
+				}
+			}
+		}
+
+		HtmlListItem listItem = (HtmlListItem)_notionRichTextToHtmlConversion.Convert(new HtmlListItem(), topLevelListBlock.BulletedListItem.RichText);
+		listItem.AddChild(nestedUnorderedListElement);
+
+		return listItem;
+	}
+
+	private List<NotionBlock> ExtractBlocksThatMakeUpTheList(int topLevelBlockIndex, List<NotionBlock> blocks)
+	{
+		List<NotionBlock> blocksThatMakeUpTheList = new List<NotionBlock>();
+
+		while (blocks[topLevelBlockIndex].Type == "bulleted_list_item")
+		{
+			blocksThatMakeUpTheList.Add(blocks[topLevelBlockIndex]);
+			topLevelBlockIndex++;
+		}
+
+		return blocksThatMakeUpTheList;
+	}
+
+	private string ConvertLeafBlockToHtml(NotionBlock block)
     {
 	    switch (block.Type)
 	    {

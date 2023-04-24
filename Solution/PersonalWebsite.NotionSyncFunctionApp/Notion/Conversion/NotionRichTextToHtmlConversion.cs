@@ -7,7 +7,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
-public class NotionRichTextToHtmlConversion
+public class NotionRichTextToHtmlConversion : INotionRichTextToHtmlConversion
 {
 	private readonly HtmlElement _rootElement;
 	private readonly List<NotionRichText> _notionRichTexts;
@@ -281,4 +281,9 @@ public class NotionRichTextToHtmlConversion
 
 		return orderedElements;
 	}
+}
+
+public interface INotionRichTextToHtmlConversion
+{
+	HtmlElement Convert(HtmlElement rootElement, List<NotionRichText> notionRichTexts);
 }
