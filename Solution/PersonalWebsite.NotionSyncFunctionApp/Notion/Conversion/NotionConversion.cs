@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 
@@ -16,55 +17,96 @@ public class NotionConversion : INotionConversion
 
 	public string ConvertBlocksToHtml(List<NotionBlock> blocks)
 	{
+		List<HtmlElement> blocksAsHtmlElements = new List<HtmlElement>();
+
 		for (int topLevelBlockIndex = 0; topLevelBlockIndex < blocks.Count; topLevelBlockIndex++)
 		{
-			if (blocks[topLevelBlockIndex].Type  == "bulleted_list_item")
+			if (blocks[topLevelBlockIndex].Type  == "bulleted_list_item" || blocks[topLevelBlockIndex].Type == "numbered_list_item")
 			{
-				//  Get the blocks in the list
 				List<NotionBlock> blocksThatMakeUpList = ExtractBlocksThatMakeUpTheList(topLevelBlockIndex, blocks);
 
-				// Build top level list -- recursively attain list items
-				HtmlElement unorderedElement = GetUnorderedList(blocksThatMakeUpList);
+				HtmlElement listElement = GetListElement(blocksThatMakeUpList);
 
-				// Add top level block to the list
+				blocksAsHtmlElements.Add(listElement);
 
-				// Adjust the index to skip the blocks that make up the list
+				topLevelBlockIndex += blocksThatMakeUpList.Count - 1;
 			}
-			
-		}
-    }
 
-	private HtmlElement GetUnorderedList(List<NotionBlock> topLevelListBlocks)
-	{
-		HtmlUnorderedListElement unorderedListElement = new HtmlUnorderedListElement();
-
-		foreach (NotionBlock topLevelListBlock in topLevelListBlocks)
-		{
-			// Recursively get the list items
-			HtmlListItem listItem = GenerateListItem(topLevelListBlock);
-		}
-
-		return unorderedListElement;
-	}
-
-	private HtmlListItem GenerateListItem(NotionBlock topLevelListBlock)
-	{
-		HtmlUnorderedListElement nestedUnorderedListElement = new HtmlUnorderedListElement();
-
-		if (topLevelListBlock.HasChildren)
-		{
-			foreach (NotionBlock childBlock in topLevelListBlock.ChildBlocks)
+			if (blocks[topLevelBlockIndex].Type == "code")
 			{
-				if (childBlock.Type == "bulleted_list_item")
+				var preformattedElement = new HtmlPreformattedElement();
+
+				HtmlElement codeElement = _notionRichTextToHtmlConversion.Convert(new HtmlCodeElement(), blocks[topLevelBlockIndex].Paragraph.RichText);
+				preformattedElement.AddChild(codeElement);
+
+				blocksAsHtmlElements.Add(preformattedElement);
+			}
+
+			if (blocks[topLevelBlockIndex].Type == "embed")
+			{
+				HtmlElement embedElement = new HtmlEmbedElement(blocks[topLevelBlockIndex].Embed.Url);
+				blocksAsHtmlElements.Add(embedElement);
+			}
+
+			if (blocks[topLevelBlockIndex].Type == "image")
+			{
+				if (blocks[topLevelBlockIndex].Image.Type == "file")
 				{
-					HtmlListItem nestedListItem = GenerateListItem(childBlock);
-					nestedUnorderedListElement.AddChild(nestedListItem);
+					// Create a stream from the image data 
+
+					// Upload the image stream to Azure Blob Storage
+
+					// Create an img element with the src attribute pointing to the Azure Blob Storage URL
+				}
+				else
+				{
+					// Create an img element with the src attribute pointing to the public URL
 				}
 			}
 		}
 
-		HtmlListItem listItem = (HtmlListItem)_notionRichTextToHtmlConversion.Convert(new HtmlListItem(), topLevelListBlock.BulletedListItem.RichText);
-		listItem.AddChild(nestedUnorderedListElement);
+		return "";
+    }
+
+	private HtmlElement GetListElement(List<NotionBlock> notionListBlocks)
+	{
+		HtmlElement listElement = GetListElement(notionListBlocks.First());
+
+		foreach (NotionBlock listBlock in notionListBlocks)
+		{
+			HtmlListItem listItem = GenerateListItem(listBlock);
+			listElement.AddChild(listItem);
+		}
+
+		return listElement;
+	}
+
+	private static HtmlElement GetListElement(NotionBlock notionBlock)
+	{
+		return notionBlock.Type == "bulleted_list_item" ? new HtmlUnorderedListElement() : new HtmlOrderedListElement();
+	}
+
+	private HtmlListItem GenerateListItem(NotionBlock notionBlock)
+	{
+		HtmlListItem listItem = (HtmlListItem)_notionRichTextToHtmlConversion.Convert(new HtmlListItem(), notionBlock.BulletedListItem.RichText);
+
+		if (notionBlock.HasChildren)
+		{
+			foreach (NotionBlock childBlock in notionBlock.ChildBlocks)
+			{
+				if (childBlock.Type == "bulleted_list_item" || childBlock.Type == "numbered_list_item")
+				{
+					HtmlElement nestedListElement = GetListElement(notionBlock.ChildBlocks.First());
+					HtmlListItem nestedListItem = GenerateListItem(childBlock);
+					nestedListElement.AddChild(nestedListItem);
+					listItem.AddChild(nestedListElement);
+				}
+				else
+				{
+					throw new Exception($"Notion block (id = {notionBlock.Id}) has children that are not list items");
+				}
+			}
+		}
 
 		return listItem;
 	}
@@ -73,7 +115,9 @@ public class NotionConversion : INotionConversion
 	{
 		List<NotionBlock> blocksThatMakeUpTheList = new List<NotionBlock>();
 
-		while (blocks[topLevelBlockIndex].Type == "bulleted_list_item")
+		var listType = blocks[topLevelBlockIndex].Type;
+
+		while (blocks[topLevelBlockIndex].Type == listType)
 		{
 			blocksThatMakeUpTheList.Add(blocks[topLevelBlockIndex]);
 			topLevelBlockIndex++;
@@ -108,6 +152,19 @@ public class NotionConversion : INotionConversion
 			    throw new ArgumentOutOfRangeException();
 	    }	
     }
+}
+
+public class HtmlEmbedElement : HtmlElement
+{
+	public string EmbedUrl { get; }
+
+	public HtmlEmbedElement(string embedUrl)
+	{
+		EmbedUrl = embedUrl;
+	}
+
+	public override string? Tag { get; }
+	public override List<HtmlElement>? Children { get; set; }
 }
 
 public interface IBlockConverter

@@ -18,6 +18,8 @@ public class NotionBlock : BaseNotionObject
 
     public NotionCode Code { get; set; }
 
+    public NotionEmbed Embed { get; set; }
+
     [JsonPropertyName("heading_1")]
     public NotionHeading HeadingOne { get; set; }
 

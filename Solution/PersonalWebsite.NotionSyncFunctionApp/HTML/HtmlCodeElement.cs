@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
-class HtmlCode : HtmlElement
+class HtmlCodeElement : HtmlElement
 {
 	public override string? Tag { get; }
 	public override List<HtmlElement>? Children { get; set; } = new List<HtmlElement>();

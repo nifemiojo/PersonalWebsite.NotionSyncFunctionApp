@@ -256,7 +256,7 @@ public class NotionRichTextToHtmlConversion : INotionRichTextToHtmlConversion
 					}
 					break;
 					case InlineTextSemantic.Code:
-					if (orderedElements.Count(x => x is HtmlCode) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Code))
+					if (orderedElements.Count(x => x is HtmlCodeElement) == 0 && !remainingRichTexts[i].GetTextSemanticState(InlineTextSemantic.Code))
 					{
 						orderedElements.Insert(0, candidateElements[j]);
 					}

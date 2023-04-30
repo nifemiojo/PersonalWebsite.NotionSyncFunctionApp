@@ -14,7 +14,7 @@ public class InlineTextSemanticMapping
 			InlineTextSemantic.Italic => typeof(HtmlItalic),
 			InlineTextSemantic.Strikethrough => typeof(HtmlStrikethrough),
 			InlineTextSemantic.Underline => typeof(HtmlUnderline),
-			InlineTextSemantic.Code => typeof(HtmlCode),
+			InlineTextSemantic.Code => typeof(HtmlCodeElement),
 			InlineTextSemantic.Link => typeof(HtmlHyperlink),
 			_ => throw new ArgumentOutOfRangeException(nameof(inlineTextSemantic), inlineTextSemantic, null)
 		};
@@ -28,7 +28,7 @@ public class InlineTextSemanticMapping
 			InlineTextSemantic.Italic => new HtmlItalic(),
 			InlineTextSemantic.Strikethrough => new HtmlStrikethrough(),
 			InlineTextSemantic.Underline => new HtmlUnderline(),
-			InlineTextSemantic.Code => new HtmlCode(),
+			InlineTextSemantic.Code => new HtmlCodeElement(),
 			InlineTextSemantic.Link => new HtmlHyperlink(),
 			_ => throw new ArgumentOutOfRangeException(nameof(inlineTextSemantic), inlineTextSemantic, null)
 		};
@@ -42,7 +42,7 @@ public class InlineTextSemanticMapping
 			HtmlItalic => InlineTextSemantic.Italic,
 			HtmlStrikethrough => InlineTextSemantic.Strikethrough,
 			HtmlUnderline => InlineTextSemantic.Underline,
-			HtmlCode => InlineTextSemantic.Code,
+			HtmlCodeElement => InlineTextSemantic.Code,
 			HtmlHyperlink => InlineTextSemantic.Link,
 			_ => throw new ArgumentOutOfRangeException(nameof(htmlElement), htmlElement, null)
 		};
