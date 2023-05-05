@@ -8,6 +8,9 @@ public abstract class HtmlElement
 {
 	public abstract string? Tag { get; }
 
+	public string Class { get; set; }
+	public string Role { get; set; }
+
 	public virtual HtmlElement? Parent { get; set; } = null;
 
 	public abstract List<HtmlElement>? Children { get; set; }

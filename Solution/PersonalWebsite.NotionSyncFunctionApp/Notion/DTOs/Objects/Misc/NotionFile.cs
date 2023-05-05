@@ -6,24 +6,16 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 public class NotionFile : NotionIcon
 {
     public string Type { get; set; }
-}
-
-class NotionExternalFile : NotionFile
-{
+    public NotionHostedFileObject File { get; set; }
     public NotionExternalFileObject External { get; set; }
 }
 
-class NotionHostedFile : NotionFile
-{
-    public NotionHostedFileObject File { get; set; }
-}
-
-internal class NotionExternalFileObject
+public class NotionExternalFileObject
 {
     public string Url { get; set; }
 }
 
-internal class NotionHostedFileObject
+public class NotionHostedFileObject
 {
     public string Url { get; set; }
 

@@ -3,9 +3,9 @@ using PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Application;
 
-public interface ILastSyncTimestampStorage
+public interface ILastSyncTimestampStorage : IAzureBlob
 {
-    Task<LastSync> Retrieve();
+    Task<LastSync> RetrieveAsync();
 
 	/// <summary>
 	/// Overwrites or creates the last sync timestamp blob.
@@ -13,5 +13,5 @@ public interface ILastSyncTimestampStorage
 	/// If the blob does not exist, it will be created with the current time.
 	/// The timestamp is always UTC.
 	/// </summary>
-	Task Upsert();
+	Task UpsertAsync();
 }

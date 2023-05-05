@@ -18,7 +18,7 @@ public class LastSyncTimestampAzureBlob : ILastSyncTimestampStorage
         _lastSyncBlobClient = lastSyncBlobClient;
     }
 
-    public async Task<LastSync> Retrieve()
+    public async Task<LastSync> RetrieveAsync()
     {
 	    try
 	    {
@@ -38,7 +38,7 @@ public class LastSyncTimestampAzureBlob : ILastSyncTimestampStorage
 	    }
     }
 
-    public async Task Upsert()
+    public async Task UpsertAsync()
     {
 	    try
 	    {

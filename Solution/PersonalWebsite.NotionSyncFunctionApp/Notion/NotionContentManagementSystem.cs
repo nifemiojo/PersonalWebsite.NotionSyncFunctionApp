@@ -13,8 +13,6 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Response;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 

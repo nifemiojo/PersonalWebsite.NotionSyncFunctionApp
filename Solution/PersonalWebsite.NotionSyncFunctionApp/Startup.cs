@@ -35,6 +35,11 @@ public class Startup : FunctionsStartup
 				_ => new BlobClient(
 					new Uri($"https://{storageAccountName}.blob.core.windows.net/{storageContainerName}/{storageBlobName}"),
 					new DefaultAzureCredential()));
+
+			clientBuilder.AddClient<BlobContainerClient, BlobClientOptions>(
+				_ => new BlobContainerClient(
+					new Uri($"https://{storageAccountName}.blob.core.windows.net/{storageContainerName}"),
+					new DefaultAzureCredential()));
 		});
 
 		builder.Services.AddHttpClient<INotionClient, NotionClient>(httpClient =>
@@ -46,6 +51,7 @@ public class Startup : FunctionsStartup
 		});
 
 		builder.Services.AddSingleton<ILastSyncTimestampStorage, LastSyncTimestampAzureBlob>();
+		builder.Services.AddSingleton<IAzureBlobContainer, BlogPostImagesAzureBlobContainer>();
 		// builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();
 	}
 }

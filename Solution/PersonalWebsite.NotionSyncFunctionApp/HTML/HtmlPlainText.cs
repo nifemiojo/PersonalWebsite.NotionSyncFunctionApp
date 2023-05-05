@@ -11,7 +11,7 @@ public class HtmlPlainText : HtmlElement
 
 	public string Content
 	{
-		get => HttpUtility.HtmlEncode(_content);
-		set =>  _content = value;
+		get => _content;
+		set =>  _content = HttpUtility.HtmlEncode(value);
 	}
 }

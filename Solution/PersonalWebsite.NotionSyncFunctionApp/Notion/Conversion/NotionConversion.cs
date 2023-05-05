@@ -1,66 +1,114 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
 public class NotionConversion : INotionConversion
 {
 	private readonly INotionRichTextToHtmlConversion _notionRichTextToHtmlConversion;
+	private readonly INotionListBlockToHtmlListElement _notionListBlockToHtmlListElement;
+	private readonly INotionFileToHtmlImage _notionFileToHtmlImage;
 
-	public NotionConversion(IBlockConverter blockConverter, INotionRichTextToHtmlConversion notionRichTextToHtmlConversion)
+	public NotionConversion(INotionRichTextToHtmlConversion notionRichTextToHtmlConversion,
+		INotionListBlockToHtmlListElement notionListBlockToHtmlListElement,
+		INotionFileToHtmlImage notionFileToHtmlImage)
 	{
 		_notionRichTextToHtmlConversion = notionRichTextToHtmlConversion;
+		_notionListBlockToHtmlListElement = notionListBlockToHtmlListElement;
+		_notionFileToHtmlImage = notionFileToHtmlImage;
 	}
 
-	public string ConvertBlocksToHtml(List<NotionBlock> blocks)
+	public async Task<string> ConvertBlocksToHtml(List<NotionBlock> blocks)
 	{
 		List<HtmlElement> blocksAsHtmlElements = new List<HtmlElement>();
 
+		List<NotionBlock> processedListBlocks = new List<NotionBlock>();
+
 		for (int topLevelBlockIndex = 0; topLevelBlockIndex < blocks.Count; topLevelBlockIndex++)
 		{
-			if (blocks[topLevelBlockIndex].Type  == "bulleted_list_item" || blocks[topLevelBlockIndex].Type == "numbered_list_item")
+			if (processedListBlocks.Contains(blocks[topLevelBlockIndex]))
+				continue;
+
+			var notionBlock = blocks[topLevelBlockIndex];
+
+			switch (notionBlock.Type)
 			{
-				List<NotionBlock> blocksThatMakeUpList = ExtractBlocksThatMakeUpTheList(topLevelBlockIndex, blocks);
-
-				HtmlElement listElement = GetListElement(blocksThatMakeUpList);
-
-				blocksAsHtmlElements.Add(listElement);
-
-				topLevelBlockIndex += blocksThatMakeUpList.Count - 1;
-			}
-
-			if (blocks[topLevelBlockIndex].Type == "code")
-			{
-				var preformattedElement = new HtmlPreformattedElement();
-
-				HtmlElement codeElement = _notionRichTextToHtmlConversion.Convert(new HtmlCodeElement(), blocks[topLevelBlockIndex].Paragraph.RichText);
-				preformattedElement.AddChild(codeElement);
-
-				blocksAsHtmlElements.Add(preformattedElement);
-			}
-
-			if (blocks[topLevelBlockIndex].Type == "embed")
-			{
-				HtmlElement embedElement = new HtmlEmbedElement(blocks[topLevelBlockIndex].Embed.Url);
-				blocksAsHtmlElements.Add(embedElement);
-			}
-
-			if (blocks[topLevelBlockIndex].Type == "image")
-			{
-				if (blocks[topLevelBlockIndex].Image.Type == "file")
+				case "bulleted_list_item":
+				case "numbered_list_item":
 				{
-					// Create a stream from the image data 
+					List<NotionBlock> blocksThatMakeUpList = ExtractBlocksThatMakeUpTheList(notionBlock, blocks);
+					processedListBlocks.AddRange(blocksThatMakeUpList);
 
-					// Upload the image stream to Azure Blob Storage
+					HtmlElement listElement = _notionListBlockToHtmlListElement.Convert(blocksThatMakeUpList);
 
-					// Create an img element with the src attribute pointing to the Azure Blob Storage URL
+					blocksAsHtmlElements.Add(listElement);
+					break;
 				}
-				else
+				case "image":
 				{
-					// Create an img element with the src attribute pointing to the public URL
+					var imageElement = await ConvertToImageElement(notionBlock);
+
+					blocksAsHtmlElements.Add(imageElement);
+					break;
+				}
+				case "divider":
+				{
+					HtmlElement dividerElement = new HtmlDivElement();
+					dividerElement.Class = "divider";
+					dividerElement.Role = "separator";
+
+					blocksAsHtmlElements.Add(dividerElement);
+					break;
+				}
+				case "code":
+				{
+					var preformattedElement = new HtmlPreformattedElement();
+					var codeElement = new HtmlCodeElement();
+					preformattedElement.AddChild(codeElement);
+
+					ConvertRichTextToHtmlElement(codeElement, notionBlock.Code.RichText                                                                                                                                                                                                                                                                                                                                                                             );
+
+					blocksAsHtmlElements.Add(preformattedElement);
+					break;
+				}
+				case "heading_1":
+				{
+					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(1), notionBlock.HeadingOne.RichText);
+
+					blocksAsHtmlElements.Add(headingElement);
+					break;
+				}
+				case "heading_2":
+				{
+					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(2), notionBlock.HeadingTwo.RichText);
+
+					blocksAsHtmlElements.Add(headingElement);
+					break;
+				}
+				case "heading_3":
+				{
+					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(3), notionBlock.HeadingThree.RichText);
+
+					blocksAsHtmlElements.Add(headingElement);
+					break;
+				}
+				case "paragraph":
+				{
+					HtmlElement paragraphElement = ConvertRichTextToHtmlElement(new HtmlParagraphElement(), notionBlock.Paragraph.RichText);
+
+					blocksAsHtmlElements.Add(paragraphElement);
+					break;
+				}
+				case "quote":
+				{
+					HtmlElement paragraphElement = ConvertRichTextToHtmlElement(new HtmlBlockQuoteElement(), notionBlock.Paragraph.RichText);
+
+					blocksAsHtmlElements.Add(paragraphElement);
+					break;
 				}
 			}
 		}
@@ -68,110 +116,33 @@ public class NotionConversion : INotionConversion
 		return "";
     }
 
-	private HtmlElement GetListElement(List<NotionBlock> notionListBlocks)
+	public async Task<HtmlElement> ConvertToImageElement(NotionBlock notionBlock)
 	{
-		HtmlElement listElement = GetListElement(notionListBlocks.First());
-
-		foreach (NotionBlock listBlock in notionListBlocks)
-		{
-			HtmlListItem listItem = GenerateListItem(listBlock);
-			listElement.AddChild(listItem);
-		}
-
-		return listElement;
+		return await _notionFileToHtmlImage.ConvertToImageElement(notionBlock);
 	}
 
-	private static HtmlElement GetListElement(NotionBlock notionBlock)
+	private HtmlElement ConvertRichTextToHtmlElement(HtmlElement element, List<NotionRichText> notionRichText)
 	{
-		return notionBlock.Type == "bulleted_list_item" ? new HtmlUnorderedListElement() : new HtmlOrderedListElement();
+		return _notionRichTextToHtmlConversion.Convert(element, notionRichText);
 	}
 
-	private HtmlListItem GenerateListItem(NotionBlock notionBlock)
-	{
-		HtmlListItem listItem = (HtmlListItem)_notionRichTextToHtmlConversion.Convert(new HtmlListItem(), notionBlock.BulletedListItem.RichText);
 
-		if (notionBlock.HasChildren)
-		{
-			foreach (NotionBlock childBlock in notionBlock.ChildBlocks)
-			{
-				if (childBlock.Type == "bulleted_list_item" || childBlock.Type == "numbered_list_item")
-				{
-					HtmlElement nestedListElement = GetListElement(notionBlock.ChildBlocks.First());
-					HtmlListItem nestedListItem = GenerateListItem(childBlock);
-					nestedListElement.AddChild(nestedListItem);
-					listItem.AddChild(nestedListElement);
-				}
-				else
-				{
-					throw new Exception($"Notion block (id = {notionBlock.Id}) has children that are not list items");
-				}
-			}
-		}
-
-		return listItem;
-	}
-
-	private List<NotionBlock> ExtractBlocksThatMakeUpTheList(int topLevelBlockIndex, List<NotionBlock> blocks)
+	private List<NotionBlock> ExtractBlocksThatMakeUpTheList(NotionBlock startingNotionListBlock, List<NotionBlock> blocks)
 	{
 		List<NotionBlock> blocksThatMakeUpTheList = new List<NotionBlock>();
 
-		var listType = blocks[topLevelBlockIndex].Type;
+		var notionListBlockIndex = blocks.IndexOf(startingNotionListBlock);
+		if (notionListBlockIndex == -1)
+			throw new Exception("Could not find starting block in list of blocks");
 
-		while (blocks[topLevelBlockIndex].Type == listType)
+		var listType = startingNotionListBlock.Type;
+
+		while (blocks[notionListBlockIndex].Type == listType)
 		{
-			blocksThatMakeUpTheList.Add(blocks[topLevelBlockIndex]);
-			topLevelBlockIndex++;
+			blocksThatMakeUpTheList.Add(blocks[notionListBlockIndex]);
+			notionListBlockIndex++;
 		}
 
 		return blocksThatMakeUpTheList;
 	}
-
-	private string ConvertLeafBlockToHtml(NotionBlock block)
-    {
-	    switch (block.Type)
-	    {
-		    case "bulleted_list_item":
-			    return $"<li>{block.BulletedListItem.Text[0].PlainText}</li>";
-		    /*case "numbered_list_item":
-			    return $"<li>{block.NumberedListItem.Text[0].PlainText}</li>";
-		    case "heading_1":
-			    return $"<h1>{block.HeadingOne.Text[0].PlainText}</h1>";
-		    case "heading_2":
-			    return $"<h2>{block.HeadingTwo.Text[0].PlainText}</h2>";
-		    case "heading_3":
-			    return $"<h3>{block.HeadingThree.Text[0].PlainText}</h3>";
-		    case "paragraph":
-			    return $"<p>{block.Paragraph.Text[0].PlainText}</p>";
-		    case "quote":
-			    return $"<blockquote>{block.Quote.Text[0].PlainText}</blockquote>";
-		    case "code":
-			    return $"<pre><code>{block.Code.Text[0].PlainText}</code></pre>";
-		    case "image":
-			    return $"<img src=\"{block.Image.File.Url}\" alt=\"{block.Image.Caption[0].PlainText}\" />";*/
-		    default:
-			    throw new ArgumentOutOfRangeException();
-	    }	
-    }
-}
-
-public class HtmlEmbedElement : HtmlElement
-{
-	public string EmbedUrl { get; }
-
-	public HtmlEmbedElement(string embedUrl)
-	{
-		EmbedUrl = embedUrl;
-	}
-
-	public override string? Tag { get; }
-	public override List<HtmlElement>? Children { get; set; }
-}
-
-public interface IBlockConverter
-{
-}
-
-public interface INotionConversion
-{
-    string ConvertBlocksToHtml(List<NotionBlock> blocks);
 }

@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
-public class HtmlParagraph : HtmlElement
+public class HtmlParagraphElement : HtmlElement
 {
 	public override string? Tag { get; }
 	public override List<HtmlElement>? Children { get; set; } = new List<HtmlElement>();

@@ -34,7 +34,7 @@ internal class LastSyncTimestampAzureBlobTests
 
         var sut = new LastSyncTimestampAzureBlob(lastSyncTimestampBlobClient);
 
-        var actualLastSync = await sut.Retrieve();
+        var actualLastSync = await sut.RetrieveAsync();
 
         actualLastSync.Should().BeOfType<NoPreviousLastSync>();
     }
@@ -62,7 +62,7 @@ internal class LastSyncTimestampAzureBlobTests
 
 		var sut = new LastSyncTimestampAzureBlob(lastSyncTimestampBlobClient);
 
-		var actualLastSync = await sut.Retrieve();
+		var actualLastSync = await sut.RetrieveAsync();
 
 		actualLastSync.Timestamp.Value.Should().Be("2023-03-02T04:27:00.55Z");
     }
@@ -80,7 +80,7 @@ internal class LastSyncTimestampAzureBlobTests
 
 		var sut = new LastSyncTimestampAzureBlob(lastSyncTimestampBlobClient);
 
-		Func<Task> act = async () => await sut.Retrieve();
+		Func<Task> act = async () => await sut.RetrieveAsync();
 
 		await act.Should().ThrowAsync<BlobClientRequestException>();
 	}

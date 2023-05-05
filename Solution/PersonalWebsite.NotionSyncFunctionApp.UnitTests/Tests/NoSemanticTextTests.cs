@@ -9,7 +9,7 @@ namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Tests;
 
 class NoSemanticTextTests : NotionRichTextToHtmlConversionTests
 {
-	[TestCase(typeof(HtmlParagraph))]
+	[TestCase(typeof(HtmlParagraphElement))]
 	public void Convert_ShouldReturnSameElementType_WhenPassedSupportedElementType(Type htmlElementType)
 	{
 		List<NotionRichText> richText = new List<NotionRichText>();

@@ -24,7 +24,7 @@ internal class NotionRichTextToHtmlConversionTests
 	[SetUp]
 	public void PerTestSetUp()
 	{
-		TopLevelElement = new HtmlParagraph();
+		TopLevelElement = new HtmlParagraphElement();
 	}
 
 	protected HtmlElement CallTestMethod(List<NotionRichText> richText)
