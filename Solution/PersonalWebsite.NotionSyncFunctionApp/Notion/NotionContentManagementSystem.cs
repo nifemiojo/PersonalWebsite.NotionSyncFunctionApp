@@ -54,7 +54,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 	    return MapPagesToDomainEntities(paginatedResponse.Results);
     }
 
-    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
+    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync) where T : NotionPostPage
     {
 	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
@@ -70,7 +70,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 				await NestChildBlocks<T>(notionBlock);
 			}
 
-			var html = _notionConversion.ConvertBlocksToHtml(paginatedResponseBlocks.Results);
+			var html = _notionConversion.ConvertNotionPostToHtmlString(page.Properties.Title.Title.Single().PlainText, paginatedResponseBlocks.Results);
 
 			domainEntity.Content = new PostContent { Html = html };
 

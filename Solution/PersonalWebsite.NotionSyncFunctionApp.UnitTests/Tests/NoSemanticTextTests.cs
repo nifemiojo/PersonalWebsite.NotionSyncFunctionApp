@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 

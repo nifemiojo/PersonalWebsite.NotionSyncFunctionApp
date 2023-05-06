@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
@@ -18,7 +19,7 @@ public class NotionRichTextToHtmlConversion : INotionRichTextToHtmlConversion
 		_notionRichTexts = notionRichTexts;
 	}
 
-	public HtmlElement Convert()
+	public HtmlElement Convert(HtmlElement tempElement, List<NotionRichText> tempList)
 	{
 		HtmlElement currentParentElement = _rootElement;
 		var nextIndex = 1;

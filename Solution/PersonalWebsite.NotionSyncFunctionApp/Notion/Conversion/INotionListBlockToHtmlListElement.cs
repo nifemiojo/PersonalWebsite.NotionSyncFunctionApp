@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;

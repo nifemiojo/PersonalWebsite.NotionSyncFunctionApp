@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
+using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
@@ -22,7 +25,14 @@ public class NotionConversion : INotionConversion
 		_notionFileToHtmlImage = notionFileToHtmlImage;
 	}
 
-	public async Task<string> ConvertBlocksToHtml(List<NotionBlock> blocks)
+	public async Task<string> ConvertNotionPostToHtmlString(string postTitle, List<NotionBlock> blocks)
+	{
+		List<HtmlElement> htmlElements=  await GetHtml(blocks);
+
+		return string.Join("", htmlElements.Select(x => x.ToString()));
+	}
+
+	private async Task<List<HtmlElement>> GetHtml(List<NotionBlock> blocks)
 	{
 		List<HtmlElement> blocksAsHtmlElements = new List<HtmlElement>();
 
@@ -70,42 +80,47 @@ public class NotionConversion : INotionConversion
 					var codeElement = new HtmlCodeElement();
 					preformattedElement.AddChild(codeElement);
 
-					ConvertRichTextToHtmlElement(codeElement, notionBlock.Code.RichText                                                                                                                                                                                                                                                                                                                                                                             );
+					ConvertRichTextToHtmlElement(codeElement, notionBlock.Code.RichText);
 
 					blocksAsHtmlElements.Add(preformattedElement);
 					break;
 				}
 				case "heading_1":
 				{
-					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(1), notionBlock.HeadingOne.RichText);
+					HtmlElement headingElement =
+						ConvertRichTextToHtmlElement(new HtmlHeadingElement(1), notionBlock.HeadingOne.RichText);
 
 					blocksAsHtmlElements.Add(headingElement);
 					break;
 				}
 				case "heading_2":
 				{
-					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(2), notionBlock.HeadingTwo.RichText);
+					HtmlElement headingElement =
+						ConvertRichTextToHtmlElement(new HtmlHeadingElement(2), notionBlock.HeadingTwo.RichText);
 
 					blocksAsHtmlElements.Add(headingElement);
 					break;
 				}
 				case "heading_3":
 				{
-					HtmlElement headingElement = ConvertRichTextToHtmlElement(new HtmlHeadingElement(3), notionBlock.HeadingThree.RichText);
+					HtmlElement headingElement =
+						ConvertRichTextToHtmlElement(new HtmlHeadingElement(3), notionBlock.HeadingThree.RichText);
 
 					blocksAsHtmlElements.Add(headingElement);
 					break;
 				}
 				case "paragraph":
 				{
-					HtmlElement paragraphElement = ConvertRichTextToHtmlElement(new HtmlParagraphElement(), notionBlock.Paragraph.RichText);
+					HtmlElement paragraphElement =
+						ConvertRichTextToHtmlElement(new HtmlParagraphElement(), notionBlock.Paragraph.RichText);
 
 					blocksAsHtmlElements.Add(paragraphElement);
 					break;
 				}
 				case "quote":
 				{
-					HtmlElement paragraphElement = ConvertRichTextToHtmlElement(new HtmlBlockQuoteElement(), notionBlock.Paragraph.RichText);
+					HtmlElement paragraphElement =
+						ConvertRichTextToHtmlElement(new HtmlBlockQuoteElement(), notionBlock.Paragraph.RichText);
 
 					blocksAsHtmlElements.Add(paragraphElement);
 					break;
@@ -113,10 +128,10 @@ public class NotionConversion : INotionConversion
 			}
 		}
 
-		return "";
-    }
+		return blocksAsHtmlElements;
+	}
 
-	public async Task<HtmlElement> ConvertToImageElement(NotionBlock notionBlock)
+	private async Task<HtmlElement> ConvertToImageElement(NotionBlock notionBlock)
 	{
 		return await _notionFileToHtmlImage.ConvertToImageElement(notionBlock);
 	}

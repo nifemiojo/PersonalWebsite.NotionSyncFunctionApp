@@ -3,7 +3,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.Collections;
 
-internal class NotionPostsPagePropertiesCollection : NotionPagePropertiesCollection
+public class NotionPostsPagePropertiesCollection : NotionPagePropertiesCollection
 {
     [JsonPropertyName("Description")]
     public NotionPageRichTextProperty Description { get; set; }

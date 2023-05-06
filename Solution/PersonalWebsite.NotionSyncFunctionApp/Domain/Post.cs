@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-internal abstract class ContentBasedEntity  : IDomainEntity
+public abstract class ContentBasedEntity  : IDomainEntity
 {
 	public PostContent Content { get; set; }
 }

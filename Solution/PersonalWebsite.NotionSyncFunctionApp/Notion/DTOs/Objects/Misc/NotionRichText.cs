@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 

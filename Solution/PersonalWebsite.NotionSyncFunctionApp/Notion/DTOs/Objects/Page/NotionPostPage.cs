@@ -5,7 +5,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
-class NotionPostPage : NotionPage
+public class NotionPostPage : NotionPage
 {
     public NotionPostsPagePropertiesCollection Properties { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 

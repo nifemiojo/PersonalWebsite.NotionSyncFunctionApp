@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 

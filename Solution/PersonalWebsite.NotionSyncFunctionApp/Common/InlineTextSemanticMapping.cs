@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PersonalWebsite.NotionSyncFunctionApp.HTML;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Common;
 

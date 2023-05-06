@@ -52,6 +52,5 @@ public class Startup : FunctionsStartup
 
 		builder.Services.AddSingleton<ILastSyncTimestampStorage, LastSyncTimestampAzureBlob>();
 		builder.Services.AddSingleton<IAzureBlobContainer, BlogPostImagesAzureBlobContainer>();
-		// builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();
 	}
 }
