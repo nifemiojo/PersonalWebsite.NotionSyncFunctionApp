@@ -11,6 +11,8 @@ public abstract class HtmlElement
     public string Class { get; set; }
     public string Role { get; set; }
 
+    public HtmlAttributes Attributes { get; set; }
+
     public virtual HtmlElement? Parent { get; set; } = null;
 
     public abstract List<HtmlElement>? Children { get; set; }
@@ -83,5 +85,35 @@ public abstract class HtmlElement
         }
 
         return mostRecentDescendantElements;
+    }
+
+    public override string ToString()
+    {
+        return $"<{Tag}> {Attributes.GetAsString()}</{Tag}>";
+    }
+}
+
+public class HtmlAttributes
+{
+    private Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
+
+    public void Add(string key, string value)
+    {
+		Attributes.Add(key, value);
+	}
+
+    public string? Get(string key)
+    {
+	    return Attributes[key];
+	}
+
+    public bool ContainsKey(string key)
+    {
+		return Attributes.ContainsKey(key);
+	}
+
+    public string GetAsString()
+    {
+        return string.Join(" ", Attributes.Select(x => $"{x.Key}=\"{x.Value}\""));
     }
 }
