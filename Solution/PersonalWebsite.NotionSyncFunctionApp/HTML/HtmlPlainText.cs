@@ -6,13 +6,11 @@ namespace PersonalWebsite.NotionSyncFunctionApp.HTML;
 
 public class HtmlPlainText : HtmlElement
 {
-	private string  _content;
-	public override string? Tag { get; }
+	public override string? Tag { get; } = null;
 	public override List<HtmlElement>? Children { get; set; } = null;
 
-	public string Content
+	public HtmlPlainText(string content)
 	{
-		get => _content;
-		set =>  _content = HttpUtility.HtmlEncode(value);
+		Content = content;
 	}
 }

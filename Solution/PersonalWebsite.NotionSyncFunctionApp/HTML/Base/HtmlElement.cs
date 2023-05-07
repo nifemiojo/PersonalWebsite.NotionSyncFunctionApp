@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Web;
+using YamlDotNet.Core.Tokens;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 
 public abstract class HtmlElement
 {
+    private readonly string? _content;
+
     public abstract string? Tag { get; }
 
     public string Class { get; set; }
@@ -17,7 +22,13 @@ public abstract class HtmlElement
 
     public abstract List<HtmlElement>? Children { get; set; }
 
-    public void AddChild(HtmlElement htmlElement)
+    public string? Content
+    {
+	    get => _content;
+	    init => _content = HttpUtility.HtmlEncode(value);
+    }
+
+	public void AddChild(HtmlElement htmlElement)
     {
         Children.Add(htmlElement);
         htmlElement.Parent = this;
@@ -89,13 +100,38 @@ public abstract class HtmlElement
 
     public override string ToString()
     {
-        return $"<{Tag}> {Attributes.GetAsString()}</{Tag}>";
-    }
-}
+		var sb = new StringBuilder();
+		sb.Append($"<{Tag}");
+
+		if (Attributes?.Count > 0)
+		{
+			sb.Append($" {Attributes.GetAsString()}");
+		}
+
+		if (Children == null || Children.Count == 0)
+		{
+			sb.Append("/>");
+		}
+		else
+		{
+			sb.Append(">");
+
+			foreach (var child in Children)
+			{
+				sb.Append(child);
+			}
+
+			sb.Append($"</{Tag}>");
+		}
+
+		return sb.ToString();
+	}
 
 public class HtmlAttributes
 {
     private Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
+
+    public int Count => Attributes.Count;
 
     public void Add(string key, string value)
     {

@@ -70,7 +70,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 				await NestChildBlocks<T>(notionBlock);
 			}
 
-			var html = _notionConversion.ConvertNotionPostToHtmlString(page.Properties.Title.Title.Single().PlainText, paginatedResponseBlocks.Results);
+			var html = await _notionConversion.ConvertNotionPostToHtmlString(page.Properties.Title.Title.Single().PlainText, paginatedResponseBlocks.Results);
 
 			domainEntity.Content = new PostContent { Html = html };
 
