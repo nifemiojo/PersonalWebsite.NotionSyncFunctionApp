@@ -9,7 +9,7 @@ class NotionPlaylistPage : NotionPage
 {
     public NotionPlaylistPagePropertiesCollection Properties { get; set; }
 
-    public override IDomainEntity MapToDomain()
+    public override BlogEntity MapToDomain()
     {
         return new Playlist
         {

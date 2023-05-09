@@ -9,7 +9,7 @@ public class NotionCategoryPage : NotionPage
 {
     public NotionCategoryPagePropertiesCollection Properties { get; set; }
 
-    public override IDomainEntity MapToDomain()
+    public override BlogEntity MapToDomain()
     {
         return new Category
         {

@@ -11,5 +11,5 @@ public abstract class NotionPage : BaseNotionObject
     [JsonPropertyName("last_edited_time")]
     public string LastEditedTime { get; set; }
 
-    public abstract IDomainEntity MapToDomain();
+    public abstract BlogEntity MapToDomain();
 }

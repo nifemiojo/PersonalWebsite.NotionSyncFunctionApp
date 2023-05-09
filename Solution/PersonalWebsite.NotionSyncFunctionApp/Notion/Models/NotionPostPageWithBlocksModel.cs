@@ -5,7 +5,7 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 
 public class NotionPostPageWithBlocksModel : NotionPageWithBlocksModel
 {
-    public override IDomainEntity Map(PostContent postContent)
+    public override BlogEntity Map(PostContent postContent)
     {
         var domainEntity = Page.MapToDomain();
 

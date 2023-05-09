@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-internal class Category : IDomainEntity
+internal class Category : BlogEntity
 {
 	public string NotionPageId { get; set; }
 

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-public abstract class ContentBasedEntity  : IDomainEntity
+public abstract class ContentBasedEntity  : BlogEntity
 {
 	public PostContent Content { get; set; }
 }
 
-internal class Post : ContentBasedEntity, IDomainEntity
+internal class Post : ContentBasedEntity, BlogEntity
 {
 	public string NotionPageId { get; set; }
 

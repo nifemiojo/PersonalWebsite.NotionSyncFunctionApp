@@ -11,5 +11,5 @@ public abstract class NotionPageWithBlocksModel
 
     public List<NotionBlock> Blocks { get; set; }
 
-    public abstract IDomainEntity Map(PostContent postContent);
+    public abstract BlogEntity Map(PostContent postContent);
 }

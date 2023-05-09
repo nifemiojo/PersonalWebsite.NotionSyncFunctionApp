@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Common;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-internal class Playlist : IDomainEntity
+internal class Playlist : BlogEntity
 {
 	public string NotionPageId { get; set; }
 

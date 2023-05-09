@@ -6,5 +6,5 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Application;
 
 public interface IContentManagementSystem
 {
-    Task<List<IDomainEntity>> GetUpdatedAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : IDomainEntity;
+    Task<List<BlogEntity>> GetUpdatedBlogEntitiesAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : BlogEntity;
 }

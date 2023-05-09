@@ -1,5 +1,5 @@
 namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
-public interface IDomainEntity
+public abstract class BlogEntity
 {
 }

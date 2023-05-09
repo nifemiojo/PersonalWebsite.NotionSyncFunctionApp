@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Constants;
@@ -33,7 +32,7 @@ class NotionContentManagementSystem : IContentManagementSystem
         _settings = options.Value;
     }
 
-    public async Task<List<IDomainEntity>> GetUpdatedAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : IDomainEntity
+    public async Task<List<BlogEntity>> GetUpdatedBlogEntitiesAsync<TDomainEntity>(LastSync lastSync) where TDomainEntity : BlogEntity
     {
 	    return typeof(TDomainEntity) switch
 	    {
@@ -48,18 +47,18 @@ class NotionContentManagementSystem : IContentManagementSystem
 	    };
     }
 
-    private async Task<List<IDomainEntity>> GetUpdatedPagesAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
+    private async Task<List<BlogEntity>> GetUpdatedPagesAsync<T>(string databaseId, LastSync lastSync) where T : NotionPage
     {
 	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
 	    return MapPagesToDomainEntities(paginatedResponse.Results);
     }
 
-    private async Task<List<IDomainEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync) where T : NotionPostPage
+    private async Task<List<BlogEntity>> GetUpdatedPagesWithBlocksAsync<T>(string databaseId, LastSync lastSync) where T : NotionPostPage
     {
 	    var paginatedResponse = await GetPagesDatabaseQueryAsync<T>(databaseId, lastSync);
 
-	    var entities = new List<IDomainEntity>();
+	    var entities = new List<BlogEntity>();
 
 		foreach (var page in paginatedResponse.Results)
 		{
@@ -129,7 +128,7 @@ class NotionContentManagementSystem : IContentManagementSystem
 	    return await _notionClient.RetrieveBlockChildrenAsync(pageId);
     }
 
-    private static List<IDomainEntity> MapPagesToDomainEntities<T>(List<T> pages) where T : NotionPage
+    private static List<BlogEntity> MapPagesToDomainEntities<T>(List<T> pages) where T : NotionPage
     {
 	    return pages
 		    .Select(notionPage => notionPage.MapToDomain())

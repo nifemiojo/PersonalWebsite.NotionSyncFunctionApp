@@ -8,8 +8,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
@@ -19,14 +19,17 @@ namespace PersonalWebsite.NotionSyncFunctionApp;
 
 public class NotionSyncFunctionApp
 {
-	private readonly ILogger<NotionSyncFunctionApp> _logger;
 	private readonly INotionClient _notionClient;
+	private readonly ILastSyncTimestampStorage _lastSyncTimestampStorage;
+	private readonly IContentManagementSystem _contentManagementSystem;
 
-	public NotionSyncFunctionApp(ILogger<NotionSyncFunctionApp> log,
-		INotionClient notionClient)
+	public NotionSyncFunctionApp(INotionClient notionClient,
+		ILastSyncTimestampStorage lastSyncTimestampStorage,
+		IContentManagementSystem contentManagementSystem)
 	{
-		_logger = log;
 		_notionClient = notionClient;
+		_lastSyncTimestampStorage = lastSyncTimestampStorage;
+		_contentManagementSystem = contentManagementSystem;
 	}
 
 	[FunctionName("sync")]
@@ -39,27 +42,18 @@ public class NotionSyncFunctionApp
 	{
 		try
 		{
-			/*List<IBlogEntity> databasePages = getUpdatedNotionPagesQuery.Execute();
-			updateBlogEntities.Update();
+			var lastSync = await _lastSyncTimestampStorage.RetrieveAsync();
 
-			List<NotionCategoryModel> queryResponse = getUpdatedNotionDatabasePages.Query(UpdatedNotionDatabasePagesRequest postDatabaseQuery);
-			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);
-			List<NotionCategoryModel> queryResponse = updatedNotionDatabasePagesQueryHandler.Query(UpdatedNotionDatabasePagesQueryRequest postDatabaseQuery);*/
+			var categories = await _contentManagementSystem.GetUpdatedBlogEntitiesAsync<Category>(lastSync);
+			var playlists = await _contentManagementSystem.GetUpdatedBlogEntitiesAsync<Playlist>(lastSync);
+			var posts = await _contentManagementSystem.GetUpdatedBlogEntitiesAsync<Post>(lastSync);
 
-			var response = await _notionClient.QueryDatabaseAsync<NotionCategoryPage>("66df5294a76a454b914bf659e1a41d41",
-				new NotionQueryDatabaseBodyParameters
-				{
-					Filter = new NotionFilter
-					{
-						Property = "Last Edited Time",
-						Date = new NotionDateFilter
-						{
-							OnOrAfter = "2022-02-25T18:03:44Z"
-						}
-					}
-				});
+			await _blogRepository.UpsertAsync<Category>(categories);
+			await _blogRepository.UpsertAsync<Playlist>(playlists);
+			await _blogRepository.UpsertAsync<Post>(posts);
 
-			_logger.LogInformation("C# HTTP trigger function processed a request.");
+			await _lastSyncTimestampStorage.UpsertAsync();
+
 			return new OkObjectResult("Izz Okay");
 
 		}
