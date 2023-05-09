@@ -10,13 +10,13 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
-public class NotionConversion : INotionConversion
+public class NotionBlocksConverter : INotionBlocksConverter
 {
 	private readonly INotionRichTextToHtmlConversion _notionRichTextToHtmlConversion;
 	private readonly INotionListBlockToHtmlListElement _notionListBlockToHtmlListElement;
 	private readonly INotionFileToHtmlImage _notionFileToHtmlImage;
 
-	public NotionConversion(INotionRichTextToHtmlConversion notionRichTextToHtmlConversion,
+	public NotionBlocksConverter(INotionRichTextToHtmlConversion notionRichTextToHtmlConversion,
 		INotionListBlockToHtmlListElement notionListBlockToHtmlListElement,
 		INotionFileToHtmlImage notionFileToHtmlImage)
 	{
@@ -25,14 +25,7 @@ public class NotionConversion : INotionConversion
 		_notionFileToHtmlImage = notionFileToHtmlImage;
 	}
 
-	public async Task<string> ConvertNotionPostToHtmlString(string postTitle, List<NotionBlock> blocks)
-	{
-		List<HtmlElement> htmlElements=  await GetHtml(blocks);
-
-		return string.Join("", htmlElements.Select(x => x.ToString()));
-	}
-
-	private async Task<List<HtmlElement>> GetHtml(List<NotionBlock> blocks)
+	public async Task<List<HtmlElement>> Convert(List<NotionBlock> blocks)
 	{
 		List<HtmlElement> blocksAsHtmlElements = new List<HtmlElement>();
 

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
-public interface INotionConversion
+public interface INotionBlocksConverter
 {
-	Task<string> ConvertNotionPostToHtmlString(string postTitle, List<NotionBlock> blocks);
+	Task<List<HtmlElement>> Convert(List<NotionBlock> blocks);
 }

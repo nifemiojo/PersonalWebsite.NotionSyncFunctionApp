@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Constants;
@@ -19,16 +20,16 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Notion;
 class NotionContentManagementSystem : IContentManagementSystem
 {
     private readonly INotionClient _notionClient;
-    private readonly INotionConversion _notionConversion;
+    private readonly INotionBlocksConverter _notionBlocksConverter;
     private readonly NotionOptions _settings;
 
     public NotionContentManagementSystem(
 	    INotionClient notionClient,
 	    IOptions<NotionOptions> options,
-	    INotionConversion notionConversion)
+	    INotionBlocksConverter notionBlocksConverter)
     {
         _notionClient = notionClient;
-        _notionConversion = notionConversion;
+        _notionBlocksConverter = notionBlocksConverter;
         _settings = options.Value;
     }
 
@@ -70,9 +71,11 @@ class NotionContentManagementSystem : IContentManagementSystem
 				await NestChildBlocks<T>(notionBlock);
 			}
 
-			var html = await _notionConversion.ConvertNotionPostToHtmlString(page.Properties.Title.Title.Single().PlainText, paginatedResponseBlocks.Results);
+			var htmlElements = await _notionBlocksConverter.Convert(paginatedResponseBlocks.Results);
 
-			domainEntity.Content = new PostContent { Html = html };
+			var htmlString = string.Join("", htmlElements.Select(x => x.ToString()));
+
+			domainEntity.Content = new PostContent { Html = htmlString };
 
 			entities.Add(domainEntity);
 		}
