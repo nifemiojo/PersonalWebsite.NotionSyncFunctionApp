@@ -22,6 +22,7 @@ public class NotionSyncFunctionApp
 	private readonly INotionClient _notionClient;
 	private readonly ILastSyncTimestampStorage _lastSyncTimestampStorage;
 	private readonly IContentManagementSystem _contentManagementSystem;
+	private readonly IBlogRepository _blogRepository;
 
 	public NotionSyncFunctionApp(INotionClient notionClient,
 		ILastSyncTimestampStorage lastSyncTimestampStorage,
