@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncFunctionApp.UnitTests", "PersonalWebsite.NotionSyncFunctionApp.UnitTests\PersonalWebsite.NotionSyncFunctionApp.UnitTests.csproj", "{99E5E2C0-8632-4CCD-A343-1B4C1C48DD8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repl", "Repl\Repl.csproj", "{1FC635FB-E793-460A-B726-8E65A961D4CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repl", "Repl\Repl.csproj", "{1FC635FB-E793-460A-B726-8E65A961D4CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.PostgreSQLDatabase", "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.PostgreSQLDatabase\PersonalWebsite.NotionSyncFunctionApp.Infrastructure.PostgreSQLDatabase.csproj", "{5A6E939F-865E-4561-AE3F-C3FE4B7FF644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{1FC635FB-E793-460A-B726-8E65A961D4CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FC635FB-E793-460A-B726-8E65A961D4CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FC635FB-E793-460A-B726-8E65A961D4CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6E939F-865E-4561-AE3F-C3FE4B7FF644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6E939F-865E-4561-AE3F-C3FE4B7FF644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6E939F-865E-4561-AE3F-C3FE4B7FF644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6E939F-865E-4561-AE3F-C3FE4B7FF644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

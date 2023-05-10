@@ -6,5 +6,5 @@ namespace PersonalWebsite.NotionSyncFunctionApp.Application;
 
 internal interface IBlogRepository
 {
-	Task UpsertAsync<T>(List<BlogEntity> categories);
+	Task UpsertAsync<T>(List<BlogEntity> categories) where T : BlogEntity;
 }
