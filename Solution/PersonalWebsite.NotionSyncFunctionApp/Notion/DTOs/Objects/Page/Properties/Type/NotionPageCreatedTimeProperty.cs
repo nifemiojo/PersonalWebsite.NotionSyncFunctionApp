@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.Type;
 
-internal class NotionPageCreatedTimeProperty : NotionPageProperty
+public class NotionPageCreatedTimeProperty : NotionPageProperty
 {
     [JsonPropertyName("created_time")]
     public string CreatedTime { get; set; }

@@ -9,97 +9,97 @@ namespace PersonalWebsite.NotionSyncFunctionApp.HTML.Base;
 
 public abstract class HtmlElement
 {
-    private readonly string? _content;
+	private readonly string? _content;
 
-    public abstract string? Tag { get; }
+	public abstract string? Tag { get; }
 
-    public string Class { get; set; }
-    public string Role { get; set; }
+	public string Class { get; set; }
+	public string Role { get; set; }
 
-    public HtmlAttributes Attributes { get; set; }
+	public HtmlAttributes Attributes { get; set; }
 
-    public virtual HtmlElement? Parent { get; set; } = null;
+	public virtual HtmlElement? Parent { get; set; } = null;
 
-    public abstract List<HtmlElement>? Children { get; set; }
+	public abstract List<HtmlElement>? Children { get; set; }
 
-    public string? Content
-    {
-	    get => _content;
-	    init => _content = HttpUtility.HtmlEncode(value);
-    }
+	public string? Content
+	{
+		get => _content;
+		init => _content = HttpUtility.HtmlEncode(value);
+	}
 
 	public void AddChild(HtmlElement htmlElement)
-    {
-        Children.Add(htmlElement);
-        htmlElement.Parent = this;
-    }
+	{
+		Children.Add(htmlElement);
+		htmlElement.Parent = this;
+	}
 
-    public void AddChildren(IEnumerable<HtmlElement> htmlElements)
-    {
-        Children.AddRange(htmlElements);
+	public void AddChildren(IEnumerable<HtmlElement> htmlElements)
+	{
+		Children.AddRange(htmlElements);
 
-        foreach (var htmlElement in htmlElements)
-        {
-            htmlElement.Parent = this;
-        }
-    }
+		foreach (var htmlElement in htmlElements)
+		{
+			htmlElement.Parent = this;
+		}
+	}
 
-    public void AddSibling(HtmlElement htmlElement)
-    {
-        if (Parent == null)
-            throw new InvalidOperationException("Cannot add sibling to root element");
+	public void AddSibling(HtmlElement htmlElement)
+	{
+		if (Parent == null)
+			throw new InvalidOperationException("Cannot add sibling to root element");
 
-        Parent.AddChild(htmlElement);
-        htmlElement.Parent = Parent;
-    }
+		Parent.AddChild(htmlElement);
+		htmlElement.Parent = Parent;
+	}
 
-    // To validate the state, every element should have a plain text element (leaf) as the deepest element on any branch
-    public bool IsEquivalentTo(HtmlElement htmlElement)
-    {
-        if (GetType() != htmlElement.GetType())
-            return false;
+	// To validate the state, every element should have a plain text element (leaf) as the deepest element on any branch
+	public bool IsEquivalentTo(HtmlElement htmlElement)
+	{
+		if (GetType() != htmlElement.GetType())
+			return false;
 
-        if (this is HtmlHyperlink linkElement)
-        {
-            return linkElement.Href == ((HtmlHyperlink)htmlElement).Href;
-        }
+		if (this is HtmlHyperlink linkElement)
+		{
+			return linkElement.Href == ((HtmlHyperlink)htmlElement).Href;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public bool IsEquivalentTo(Type type)
-    {
-        return GetType() == type;
-    }
+	public bool IsEquivalentTo(Type type)
+	{
+		return GetType() == type;
+	}
 
-    public List<HtmlElement> GetDescendantElements()
-    {
-        var descendantElements = new List<HtmlElement>();
-        foreach (var child in Children)
-        {
-            descendantElements.Add(child);
-            descendantElements.AddRange(child.GetDescendantElements());
-        }
+	public List<HtmlElement> GetDescendantElements()
+	{
+		var descendantElements = new List<HtmlElement>();
+		foreach (var child in Children)
+		{
+			descendantElements.Add(child);
+			descendantElements.AddRange(child.GetDescendantElements());
+		}
 
-        return descendantElements;
-    }
+		return descendantElements;
+	}
 
-    public List<HtmlElement> GetNewestDescendantElementsInclusive()
-    {
-        var mostRecentDescendantElements = new List<HtmlElement>();
-        var mostRecentChildElement = this;
+	public List<HtmlElement> GetNewestDescendantElementsInclusive()
+	{
+		var mostRecentDescendantElements = new List<HtmlElement>();
+		var mostRecentChildElement = this;
 
-        while (mostRecentChildElement != null)
-        {
-            mostRecentDescendantElements.Add(mostRecentChildElement);
-            mostRecentChildElement = mostRecentChildElement.Children?.LastOrDefault();
-        }
+		while (mostRecentChildElement != null)
+		{
+			mostRecentDescendantElements.Add(mostRecentChildElement);
+			mostRecentChildElement = mostRecentChildElement.Children?.LastOrDefault();
+		}
 
-        return mostRecentDescendantElements;
-    }
+		return mostRecentDescendantElements;
+	}
 
-    public override string ToString()
-    {
+	public override string ToString()
+	{
 		var sb = new StringBuilder();
 		sb.Append($"<{Tag}");
 
@@ -127,29 +127,30 @@ public abstract class HtmlElement
 		return sb.ToString();
 	}
 
-public class HtmlAttributes
-{
-    private Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
+	public class HtmlAttributes
+	{
+		private Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
 
-    public int Count => Attributes.Count;
+		public int Count => Attributes.Count;
 
-    public void Add(string key, string value)
-    {
-		Attributes.Add(key, value);
+		public void Add(string key, string value)
+		{
+			Attributes.Add(key, value);
+		}
+
+		public string? Get(string key)
+		{
+			return Attributes[key];
+		}
+
+		public bool ContainsKey(string key)
+		{
+			return Attributes.ContainsKey(key);
+		}
+
+		public string GetAsString()
+		{
+			return string.Join(" ", Attributes.Select(x => $"{x.Key}=\"{x.Value}\""));
+		}
 	}
-
-    public string? Get(string key)
-    {
-	    return Attributes[key];
-	}
-
-    public bool ContainsKey(string key)
-    {
-		return Attributes.ContainsKey(key);
-	}
-
-    public string GetAsString()
-    {
-        return string.Join(" ", Attributes.Select(x => $"{x.Key}=\"{x.Value}\""));
-    }
 }

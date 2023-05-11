@@ -120,7 +120,7 @@ public class NotionRichTextToHtmlConversion : INotionRichTextToHtmlConversion
 			candidateElements,
 			currentParentNewestDescendantHierarchy);
 
-		newElementsOrdered.Last().AddChild(new HtmlPlainText { Content = notionRichText.PlainText });
+		newElementsOrdered.Last().AddChild(new HtmlPlainText(notionRichText.PlainText ));
 
 		for (int i = 0; i < newElementsOrdered.Count - 1; i++)
 		{
@@ -163,7 +163,7 @@ public class NotionRichTextToHtmlConversion : INotionRichTextToHtmlConversion
 
 	private static HtmlPlainText CreateHtmlPlainTextElement(string text)
 	{
-		return new HtmlPlainText { Content = text };
+		return new HtmlPlainText(text);
 	}
 
 	private HtmlElement DetermineCurrentParentElement(HtmlElement currentParentElement, NotionRichText notionRichText)

@@ -31,7 +31,7 @@ internal class NotionRichTextToHtmlConversionTests
 	protected HtmlElement CallTestMethod(List<NotionRichText> richText)
 	{
 		_sut = new NotionRichTextToHtmlConversion(TopLevelElement, richText);
-		return _sut.Convert();
+		return _sut.Convert(TopLevelElement, richText);
 	}
 
 	protected NotionRichText CreateNotionRichText(string plainText)

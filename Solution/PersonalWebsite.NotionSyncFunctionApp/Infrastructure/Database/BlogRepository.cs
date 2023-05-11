@@ -21,5 +21,6 @@ class BlogRepository : IBlogRepository
 		{
 			throw new System.NotImplementedException();
 		}
+		return Task.CompletedTask;
 	}
 }

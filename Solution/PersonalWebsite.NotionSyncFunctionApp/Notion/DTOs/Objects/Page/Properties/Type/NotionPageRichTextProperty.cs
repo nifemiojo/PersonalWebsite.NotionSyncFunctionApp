@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Misc;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.Type;
 
-internal class NotionPageRichTextProperty : NotionPageProperty
+public class NotionPageRichTextProperty : NotionPageProperty
 {
     [JsonPropertyName("rich_text")]
     public List<NotionRichText> RichText { get; set; }

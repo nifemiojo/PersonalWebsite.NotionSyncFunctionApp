@@ -26,4 +26,7 @@
   <ItemGroup>
     <Folder Include="Domain\Exceptions\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalWebsite.NotionSyncFunctionApp.Domain\PersonalWebsite.NotionSyncFunctionApp.Domain.csproj" />
+  </ItemGroup>
 </Project>
