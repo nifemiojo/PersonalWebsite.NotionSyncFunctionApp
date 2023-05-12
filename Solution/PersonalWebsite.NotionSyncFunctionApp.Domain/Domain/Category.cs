@@ -1,9 +1,6 @@
-﻿using PersonalWebsite.NotionSyncFunctionApp.Common;
-using System.Collections.Generic;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
-
-internal class Category : BlogEntity
+public class Category : BlogEntity
 {
 	public string NotionPageId { get; set; }
 

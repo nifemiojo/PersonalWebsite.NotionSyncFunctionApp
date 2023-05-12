@@ -1,4 +1,4 @@
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 public abstract class BlogEntity
 {

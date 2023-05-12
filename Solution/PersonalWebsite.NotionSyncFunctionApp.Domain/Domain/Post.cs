@@ -1,8 +1,4 @@
-﻿using PersonalWebsite.NotionSyncFunctionApp.Common;
-using System;
-using System.Collections.Generic;
-
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 public abstract class ContentBasedEntity  : BlogEntity
 {

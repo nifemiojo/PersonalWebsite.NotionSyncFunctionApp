@@ -1,7 +1,4 @@
-using System;
-using PersonalWebsite.NotionSyncFunctionApp.Common;
-
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 public class NoPreviousLastSync : LastSync
 {

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Common;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 public class Iso8601FormattedDateTime
 {

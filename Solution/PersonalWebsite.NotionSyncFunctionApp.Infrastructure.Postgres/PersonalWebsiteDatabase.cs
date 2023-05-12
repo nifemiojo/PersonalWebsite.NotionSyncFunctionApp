@@ -13,8 +13,8 @@ class PersonalWebsiteDatabase : IDatabase
 		_db = new NpgsqlConnection("placeholder");
 	}
 
-	public async Task BulkUpsertAsync<T>(string command, object param)
+	public async Task NonQueryOperationAsync<T>(DynamicParameters parameters)
 	{
-		await _db.ExecuteAsync(command, param);
+		await _db.ExecuteAsync("SP Name", parameters, commandType: CommandType.StoredProcedure);
 	}
 }

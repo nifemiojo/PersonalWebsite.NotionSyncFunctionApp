@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using PersonalWebsite.NotionSyncFunctionApp.Common;
+﻿namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
-
-internal class Playlist : BlogEntity
+public class Playlist : BlogEntity
 {
 	public string NotionPageId { get; set; }
 
