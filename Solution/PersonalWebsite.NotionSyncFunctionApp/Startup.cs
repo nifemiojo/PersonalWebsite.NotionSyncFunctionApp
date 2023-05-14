@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonalWebsite.NotionSyncFunctionApp;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
+using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 
@@ -52,5 +53,7 @@ public class Startup : FunctionsStartup
 
 		builder.Services.AddSingleton<ILastSyncTimestampStorage, LastSyncTimestampAzureBlob>();
 		builder.Services.AddSingleton<IAzureBlobContainer, BlogPostImagesAzureBlobContainer>();
+
+		builder.Services.AddInfrastructure(builder.GetContext().Configuration);
 	}
 }

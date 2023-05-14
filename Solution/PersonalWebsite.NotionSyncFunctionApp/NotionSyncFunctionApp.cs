@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -11,24 +10,18 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
-using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Request;
 
 namespace PersonalWebsite.NotionSyncFunctionApp;
 
 public class NotionSyncFunctionApp
 {
-	private readonly INotionClient _notionClient;
 	private readonly ILastSyncTimestampStorage _lastSyncTimestampStorage;
 	private readonly IContentManagementSystem _contentManagementSystem;
 	private readonly IBlogRepository _blogRepository;
 
-	public NotionSyncFunctionApp(INotionClient notionClient,
-		ILastSyncTimestampStorage lastSyncTimestampStorage,
+	public NotionSyncFunctionApp(ILastSyncTimestampStorage lastSyncTimestampStorage,
 		IContentManagementSystem contentManagementSystem)
 	{
-		_notionClient = notionClient;
 		_lastSyncTimestampStorage = lastSyncTimestampStorage;
 		_contentManagementSystem = contentManagementSystem;
 	}

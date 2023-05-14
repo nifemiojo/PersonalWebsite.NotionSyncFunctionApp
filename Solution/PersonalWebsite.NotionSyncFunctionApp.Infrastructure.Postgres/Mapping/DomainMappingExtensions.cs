@@ -1,7 +1,7 @@
 ﻿using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.DTOs;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.MappingExtensions;
+namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Mapping;
 
 internal static class DomainMappingExtensions
 {

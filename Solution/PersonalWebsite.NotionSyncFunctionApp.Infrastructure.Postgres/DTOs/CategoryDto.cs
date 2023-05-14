@@ -1,6 +1,8 @@
 ﻿namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.DTOs;
 
-internal class CategoryDto
+public class CategoryDto
 {
+	public string NotionId { get; set; }
+
 	public string Name { get; set; }
 }
