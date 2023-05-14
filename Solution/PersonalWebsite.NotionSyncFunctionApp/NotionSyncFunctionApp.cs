@@ -20,10 +20,11 @@ public class NotionSyncFunctionApp
 	private readonly IBlogRepository _blogRepository;
 
 	public NotionSyncFunctionApp(ILastSyncTimestampStorage lastSyncTimestampStorage,
-		IContentManagementSystem contentManagementSystem)
+		IContentManagementSystem contentManagementSystem, IBlogRepository blogRepository)
 	{
 		_lastSyncTimestampStorage = lastSyncTimestampStorage;
 		_contentManagementSystem = contentManagementSystem;
+		_blogRepository = blogRepository;
 	}
 
 	[FunctionName("sync")]

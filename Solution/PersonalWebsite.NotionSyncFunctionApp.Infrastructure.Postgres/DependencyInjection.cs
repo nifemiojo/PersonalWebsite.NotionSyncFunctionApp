@@ -8,7 +8,7 @@ public static class DependencyInjection
 {
 	public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
 	{
-		var personalWebsiteConnectionString = configuration.GetSection("ConnectionStrings").Get<string>();
-		services.AddSingleton<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(personalWebsiteConnectionString));
+		var personalWebsiteDatabaseConnectionString = configuration.GetValue<string>("PersonalWebsiteDatabase");
+		services.AddSingleton<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(personalWebsiteDatabaseConnectionString));
 	}
 }

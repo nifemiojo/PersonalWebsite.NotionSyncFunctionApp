@@ -5,7 +5,7 @@ public abstract class ContentBasedEntity  : BlogEntity
 	public PostContent Content { get; set; }
 }
 
-internal class Post : ContentBasedEntity
+public class Post : ContentBasedEntity
 {
 	public string NotionPageId { get; set; }
 

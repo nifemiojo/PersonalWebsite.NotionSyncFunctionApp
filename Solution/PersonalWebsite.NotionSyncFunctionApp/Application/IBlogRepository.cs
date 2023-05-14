@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Application;
 
-internal interface IBlogRepository
+public interface IBlogRepository
 {
 	Task UpsertAsync<T>(List<BlogEntity> categories) where T : BlogEntity;
 }

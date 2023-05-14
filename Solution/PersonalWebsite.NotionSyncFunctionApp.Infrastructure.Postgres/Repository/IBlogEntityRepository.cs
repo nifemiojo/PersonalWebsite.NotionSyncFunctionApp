@@ -2,7 +2,7 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Repository;
 
-internal interface ICategoryRepository
+internal interface IBlogEntityRepository
 {
-    Task UpsertAsync<T>(List<Category> categories) where T : Category;
+	Task UpsertAsync<T>(List<T> entitiesToUpsert) where T : BlogEntity;
 }

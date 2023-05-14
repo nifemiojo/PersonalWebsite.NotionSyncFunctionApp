@@ -1,6 +1,6 @@
 ﻿namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.DTOs;
 
-public class CategoryDto
+public class CategoryDto : BlogEntityDto
 {
 	public string NotionId { get; set; }
 
