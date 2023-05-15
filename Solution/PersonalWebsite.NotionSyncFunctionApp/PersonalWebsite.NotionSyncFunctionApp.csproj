@@ -24,9 +24,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\Exceptions\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\PersonalWebsite.NotionSyncFunctionApp.Application\PersonalWebsite.NotionSyncFunctionApp.Application.csproj" />
     <ProjectReference Include="..\PersonalWebsite.NotionSyncFunctionApp.Domain\PersonalWebsite.NotionSyncFunctionApp.Domain.csproj" />
     <ProjectReference Include="..\PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres\PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.csproj" />
   </ItemGroup>

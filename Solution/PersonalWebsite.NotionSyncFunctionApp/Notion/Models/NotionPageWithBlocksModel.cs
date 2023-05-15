@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Block;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 

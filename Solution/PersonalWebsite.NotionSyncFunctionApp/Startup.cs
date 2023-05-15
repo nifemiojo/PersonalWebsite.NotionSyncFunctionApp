@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalWebsite.NotionSyncFunctionApp;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;

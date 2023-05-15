@@ -8,7 +8,7 @@ internal class NotionPlaylistPagePropertiesCollection : NotionPagePropertiesColl
     [JsonPropertyName("Description")]
     public NotionPageRichTextProperty Description { get; set; }
 
-    [JsonPropertyName("Category")]
+    [JsonPropertyName("CategoryNotionPageId")]
     public NotionPageRelationProperty Category { get; set; }
 
     [JsonPropertyName("Posts")]

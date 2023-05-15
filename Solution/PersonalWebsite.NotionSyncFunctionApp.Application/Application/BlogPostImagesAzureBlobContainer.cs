@@ -1,11 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Application;
+namespace PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 
-class BlogPostImagesAzureBlobContainer : IAzureBlobContainer
+public class BlogPostImagesAzureBlobContainer : IAzureBlobContainer
 {
 	private readonly BlobContainerClient _blobContainerClient;
 

@@ -10,7 +10,7 @@ public class Playlist : BlogEntity
 
 	public Iso8601FormattedDateTime CreatedAt { get; set; }
 
-	public string Category { get; set; }
+	public string CategoryNotionPageId { get; set; }
 
 	public List<string> Posts { get; set; }
 

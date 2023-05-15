@@ -1,8 +1,8 @@
-﻿using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Database;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Dtos;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.DTOs;
-using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Mapping;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Repository;
 
@@ -15,7 +15,7 @@ class BlogEntityEntityRepository : IBlogEntityRepository
         _database = database;
     }
 
-    public async Task UpsertAsync<T>(List<T> entitiesToUpsert) where T : BlogEntity
+    public async Task UpsertAsync<T>(List<BlogEntity> entitiesToUpsert) where T : BlogEntity
     {
 	    var dtosToUpsert = entitiesToUpsert.Select(blogEntity => BlogEntityDto.Map(blogEntity)).ToList();
 

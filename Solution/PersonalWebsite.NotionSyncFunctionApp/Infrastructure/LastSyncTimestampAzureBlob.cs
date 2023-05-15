@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Blobs;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Exceptions;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure;

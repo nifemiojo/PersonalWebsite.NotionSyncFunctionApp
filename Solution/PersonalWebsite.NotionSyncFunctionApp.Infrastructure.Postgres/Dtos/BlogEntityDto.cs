@@ -9,33 +9,32 @@ public abstract class BlogEntityDto
 	{
 		if (entity is Category)
 		{
-			var category = (Category) entity;
+			var category = (Category)entity;
 			return new CategoryDto
 			{
-				Id = category.Id,
+				NotionId = category.NotionPageId,
 				Name = category.Name
 			};
 		}
 		else if (entity is Playlist)
 		{
-			var playlist = (Playlist) entity;
+			var playlist = (Playlist)entity;
 			return new PlaylistDto
 			{
-				Id = playlist.Id,
+				NotionId = playlist.NotionPageId,
 				Name = playlist.Name,
-				Description = playlist.Description
+				CategoryNotionId = playlist.CategoryNotionPageId
 			};
 		}
 		else if (entity is Post)
 		{
-			var post = (Post) entity;
+			var post = (Post)entity;
 			return new PostDto
 			{
-				Id = post.Id,
-				Title = post.Title,
-				Content = post.Content,
-				CategoryId = post.CategoryId,
-				PlaylistId = post.PlaylistId
+				NotionId = post.NotionPageId,
+				Title = post.Name,
+				Description = post.Description,
+				PlaylistNotionIds = post.Playlists
 			};
 		}
 		else
@@ -43,3 +42,4 @@ public abstract class BlogEntityDto
 			throw new NotSupportedException("Entity type not supported");
 		}
 	}
+}

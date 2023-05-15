@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page.Properties.Collections;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;

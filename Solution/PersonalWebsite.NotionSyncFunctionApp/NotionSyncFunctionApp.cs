@@ -9,7 +9,9 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
+using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp;
 
@@ -17,14 +19,14 @@ public class NotionSyncFunctionApp
 {
 	private readonly ILastSyncTimestampStorage _lastSyncTimestampStorage;
 	private readonly IContentManagementSystem _contentManagementSystem;
-	private readonly IBlogRepository _blogRepository;
+	private readonly IBlogEntityRepository _blogEntityRepository;
 
 	public NotionSyncFunctionApp(ILastSyncTimestampStorage lastSyncTimestampStorage,
-		IContentManagementSystem contentManagementSystem, IBlogRepository blogRepository)
+		IContentManagementSystem contentManagementSystem, IBlogEntityRepository blogEntityRepository)
 	{
 		_lastSyncTimestampStorage = lastSyncTimestampStorage;
 		_contentManagementSystem = contentManagementSystem;
-		_blogRepository = blogRepository;
+		_blogEntityRepository = blogEntityRepository;
 	}
 
 	[FunctionName("sync")]
@@ -43,9 +45,9 @@ public class NotionSyncFunctionApp
 			var playlists = await _contentManagementSystem.GetUpdatedBlogEntitiesAsync<Playlist>(lastSync);
 			var posts = await _contentManagementSystem.GetUpdatedBlogEntitiesAsync<Post>(lastSync);
 
-			await _blogRepository.UpsertAsync<Category>(categories);
-			await _blogRepository.UpsertAsync<Playlist>(playlists);
-			await _blogRepository.UpsertAsync<Post>(posts);
+			await _blogEntityRepository.UpsertAsync<Category>(categories);
+			await _blogEntityRepository.UpsertAsync<Playlist>(playlists);
+			await _blogEntityRepository.UpsertAsync<Post>(posts);
 
 			await _lastSyncTimestampStorage.UpsertAsync();
 

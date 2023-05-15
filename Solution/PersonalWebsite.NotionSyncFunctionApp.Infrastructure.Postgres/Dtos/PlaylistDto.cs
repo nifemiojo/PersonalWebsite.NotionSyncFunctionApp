@@ -2,6 +2,11 @@
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Dtos;
 
-internal class PlaylistDto : BlogEntityDto
+public class PlaylistDto : BlogEntityDto
 {
+	public string NotionId { get; set; }
+
+	public string Name { get; set; }
+
+	public string CategoryNotionId { get; set; }
 }

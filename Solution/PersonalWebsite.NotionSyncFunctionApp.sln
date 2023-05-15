@@ -14,9 +14,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repl", "Repl\Repl.csproj", "{1FC635FB-E793-460A-B726-8E65A961D4CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres", "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres\PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.csproj", "{C08A3CBD-A32A-42B7-AF20-1308BC9E50C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres", "PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres\PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.csproj", "{C08A3CBD-A32A-42B7-AF20-1308BC9E50C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.Domain", "PersonalWebsite.NotionSyncFunctionApp.Domain\PersonalWebsite.NotionSyncFunctionApp.Domain.csproj", "{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncFunctionApp.Domain", "PersonalWebsite.NotionSyncFunctionApp.Domain\PersonalWebsite.NotionSyncFunctionApp.Domain.csproj", "{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.Application", "PersonalWebsite.NotionSyncFunctionApp.Application\PersonalWebsite.NotionSyncFunctionApp.Application.csproj", "{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

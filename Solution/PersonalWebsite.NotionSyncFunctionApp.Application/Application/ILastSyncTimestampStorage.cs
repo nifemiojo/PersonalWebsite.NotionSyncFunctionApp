@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using PersonalWebsite.NotionSyncFunctionApp.Domain;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
-namespace PersonalWebsite.NotionSyncFunctionApp.Application;
+namespace PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 
 public interface ILastSyncTimestampStorage : IAzureBlob
 {

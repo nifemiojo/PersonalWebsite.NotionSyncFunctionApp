@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using PersonalWebsite.NotionSyncFunctionApp.Common;
+using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.UnitTests.Common;
 
