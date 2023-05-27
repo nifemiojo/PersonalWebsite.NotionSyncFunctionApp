@@ -1,12 +1,12 @@
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 public class LastSync
 {
-	public Iso8601FormattedDateTime Timestamp { get; } = Iso8601FormattedDateTime.CreateFrom(DateTime.MinValue);
+    public Iso8601FormattedDateTime Timestamp { get; } = Iso8601FormattedDateTime.CreateFrom(DateTime.MinValue);
 
-	protected LastSync()
-	{
-	}
+    protected LastSync()
+    {
+    }
 
     public LastSync(DateTime timestamp)
     {

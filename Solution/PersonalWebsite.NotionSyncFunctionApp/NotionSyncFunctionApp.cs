@@ -11,7 +11,6 @@ using Microsoft.OpenApi.Models;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp;
 

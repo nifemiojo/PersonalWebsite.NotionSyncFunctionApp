@@ -1,5 +1,4 @@
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Conversion;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using PersonalWebsite.NotionSyncFunctionApp.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Client;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Configuration;
 using PersonalWebsite.NotionSyncFunctionApp.Notion.Constants;

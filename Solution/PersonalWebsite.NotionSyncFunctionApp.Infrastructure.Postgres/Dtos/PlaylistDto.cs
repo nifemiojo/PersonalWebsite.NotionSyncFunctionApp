@@ -8,5 +8,9 @@ public class PlaylistDto : BlogEntityDto
 
 	public string Name { get; set; }
 
+	public string Description { get; set; }
+
 	public string CategoryNotionId { get; set; }
+
+	public List<string> PostNotionEntityIds { get; set; }
 }

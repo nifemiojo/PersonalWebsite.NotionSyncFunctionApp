@@ -1,4 +1,4 @@
-﻿using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
+﻿using PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Application.Application;
 

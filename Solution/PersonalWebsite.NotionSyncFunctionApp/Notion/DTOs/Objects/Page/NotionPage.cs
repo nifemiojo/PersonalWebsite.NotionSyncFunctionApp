@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.DTOs.Objects.Page;
 

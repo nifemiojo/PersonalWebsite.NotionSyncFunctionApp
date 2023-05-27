@@ -4,11 +4,11 @@ using Npgsql;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Connection;
 
-internal class DatabaseConnectionFactory : IDatabaseConnectionFactory
+public class PostgreSqlDatabaseConnectionFactory : IDatabaseConnectionFactory
 {
 	private readonly string _connectionString;
 
-	public DatabaseConnectionFactory(string connectionString)
+	public PostgreSqlDatabaseConnectionFactory(string connectionString)
 	{
 		_connectionString = connectionString;
 	}

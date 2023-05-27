@@ -10,5 +10,7 @@ public class PostDto : BlogEntityDto
 
 	public string Description { get; set; }
 
+	public string Html { get; set; }
+
 	public List<string> PlaylistNotionIds { get; set; }
 }

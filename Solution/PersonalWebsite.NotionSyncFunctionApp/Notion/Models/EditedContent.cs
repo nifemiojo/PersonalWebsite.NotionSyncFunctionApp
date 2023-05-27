@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using PersonalWebsite.NotionSyncFunctionApp.Domain;
-using PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Notion.Models;
 

@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Domain\Exceptions\**" />
-    <EmbeddedResource Remove="Domain\Exceptions\**" />
-    <None Remove="Domain\Exceptions\**" />
+    <Compile Remove="Exceptions\Exceptions\**" />
+    <EmbeddedResource Remove="Exceptions\Exceptions\**" />
+    <None Remove="Exceptions\Exceptions\**" />
   </ItemGroup>
 
 </Project>

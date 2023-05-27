@@ -1,9 +1,9 @@
-namespace PersonalWebsite.NotionSyncFunctionApp.Domain.Domain;
+namespace PersonalWebsite.NotionSyncFunctionApp.Domain;
 
 public class NoPreviousLastSync : LastSync
 {
-	public NoPreviousLastSync()
-	{
+    public NoPreviousLastSync()
+    {
     }
 
     private NoPreviousLastSync(DateTime timestamp) : base(timestamp)

@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncFunctionApp.Domain", "PersonalWebsite.NotionSyncFunctionApp.Domain\PersonalWebsite.NotionSyncFunctionApp.Domain.csproj", "{38BF9F76-3CC8-4745-8CB0-60BDDBFC7BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.Application", "PersonalWebsite.NotionSyncFunctionApp.Application\PersonalWebsite.NotionSyncFunctionApp.Application.csproj", "{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.NotionSyncFunctionApp.Application", "PersonalWebsite.NotionSyncFunctionApp.Application\PersonalWebsite.NotionSyncFunctionApp.Application.csproj", "{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.NotionSyncFunctionApp.IntegrationTests", "PersonalWebsite.NotionSyncFunctionApp.IntegrationTests\PersonalWebsite.NotionSyncFunctionApp.IntegrationTests.csproj", "{00DAA694-14A1-4509-A081-5D1BC00D034C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0FDABE5-6E7E-4E6D-9DCE-A3B5E161F855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00DAA694-14A1-4509-A081-5D1BC00D034C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00DAA694-14A1-4509-A081-5D1BC00D034C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00DAA694-14A1-4509-A081-5D1BC00D034C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00DAA694-14A1-4509-A081-5D1BC00D034C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

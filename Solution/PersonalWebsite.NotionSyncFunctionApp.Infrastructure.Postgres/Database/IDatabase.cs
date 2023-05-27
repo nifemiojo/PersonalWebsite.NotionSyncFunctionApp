@@ -4,7 +4,7 @@ using PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.DTOs;
 
 namespace PersonalWebsite.NotionSyncFunctionApp.Infrastructure.Postgres.Database;
 
-internal interface IDatabase
+public interface IDatabase
 {
     Task UpsertCategoriesStoredProcedureAsync(List<CategoryDto> categoryDtos);
     Task UpsertPlaylistsStoredProcedureAsync(List<PlaylistDto> playlistDtos);
